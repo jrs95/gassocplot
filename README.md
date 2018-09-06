@@ -11,11 +11,11 @@ Regional association plots for genetic and epigenetic data.
 3. install_github("jrs95/gassocplot")
 4. library(lmrse)
 
-# Example
+# Examples
 \#\#\# assoc_plot  
 markers <- gassocplot::test_assoc_plot  
 head(markers)  
-corr <- gassocplot::test_assoc_plot_corr   
+corr <- gassocplot::test_corr   
 assoc_plot(markers, corr)   
 
 \#\#\# stack_assoc_plot  
