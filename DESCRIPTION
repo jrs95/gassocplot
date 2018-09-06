@@ -1,0 +1,20 @@
+Package: gassocplot
+Title: Regional association plots
+Version: 1.0
+Date: 30-08-2018
+Author: James Staley
+Maintainer: James Staley <js16174@bristol.ac.uk>
+Description: This package is used plot regional association plots. 
+Depends:
+    R (>= 3.3.0),
+    methods
+License: GPL (>= 2)
+ByteCompile: TRUE
+LazyData: TRUE
+Encoding: UTF-8
+Imports: 
+    ggplot2,
+    grid,
+    gridExtra,
+    gtable
+RoxygenNote: 6.0.1
