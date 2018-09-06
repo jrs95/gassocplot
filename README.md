@@ -21,5 +21,7 @@ assoc_plot(markers, corr)
 \#\#\# stack_assoc_plot  
 markers <- gassocplot::test_stack_assoc_plot_markers  
 head(markers)  
+z <- gassocplot::test_stack_assoc_plot_associations  
+head(z)  
 corr <- gassocplot::test_corr   
-assoc_plot(markers, corr)   
+stack_assoc_plot(markers, z, corr, c("T1", "T2"))   
