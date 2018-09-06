@@ -12,14 +12,14 @@ Regional association plots for genetic and epigenetic data.
 4. library(lmrse)
 
 # Example
-\#\#\# assoc_plot .  
-markers <- gassocplot::test_assoc_plot .
-head(markers)
-corr <- gassocplot::test_assoc_plot_corr . 
-assoc_plot(markers, corr) .  
+\#\#\# assoc_plot  
+markers <- gassocplot::test_assoc_plot  
+head(markers)  
+corr <- gassocplot::test_assoc_plot_corr   
+assoc_plot(markers, corr)   
 
-\#\#\# stack_assoc_plot . 
-markers <- gassocplot::test_stack_assoc_plot_markers .
-head(markers)
-corr <- gassocplot::test_corr . 
-assoc_plot(markers, corr) .  
+\#\#\# stack_assoc_plot  
+markers <- gassocplot::test_stack_assoc_plot_markers  
+head(markers)  
+corr <- gassocplot::test_corr   
+assoc_plot(markers, corr)   
