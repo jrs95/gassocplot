@@ -9,7 +9,7 @@ Regional association plots for genetic and epigenetic data.
 1. install.packages("devtools")
 2. library(devtools) 
 3. install_github("jrs95/gassocplot")
-4. library(lmrse)
+4. library(gassocplot)
 
 # Examples
 \#\#\# assoc_plot  
