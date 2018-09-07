@@ -659,6 +659,6 @@ stack_assoc_plot <- function(markers, z, corr, traits, x.min=NULL, x.max=NULL, t
 #' @export
 stack_assoc_plot_save <- function(x, file, n_traits, width=NULL, height=NULL){
   if(is.null(width)){width <- 8}
-  if(is.null(height)){height <- 3 + 4*n_traits}  
+  if(is.null(height)){height <- 4 + 4*n_traits}  
   ggsave(file, plot=grid.draw(x), width=width, height=height, units="in", limitsize=F, dpi=350)
 }
