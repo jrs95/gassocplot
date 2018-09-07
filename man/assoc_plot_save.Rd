@@ -4,7 +4,7 @@
 \alias{assoc_plot_save}
 \title{assoc_plot_save}
 \usage{
-assoc_plot_save(x, file, width = NULL, height = NULL)
+assoc_plot_save(x, file, width = 8, height = 7)
 }
 \arguments{
 \item{x}{the plot}
