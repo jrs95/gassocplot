@@ -289,12 +289,12 @@ plot_assoc_combined <- function(recombination.plot, gene.plot, marker.plot, titl
   if(ngenes>5 & ngenes<=10){g$heights[panels[2]] <- unit(1.2,"null")}
   if(ngenes>10){g$heights[panels[2]] <- unit(2,"null")}
   if(!is.null(subtitle)){
-    gt1 <- textGrob(subtitle,gp=gpar(fontsize=16, fontface="italic"))
+    gt1 <- textGrob(subtitle,gp=gpar(fontsize=16))
     g <- gtable_add_rows(g, heights = grobHeight(gt1)*2.5, pos = 0)
     g <- gtable_add_grob(g, gt1, 1, 1, 1, ncol(g))
   }
   if(!is.null(title)){
-    gt <- textGrob(title,gp=gpar(fontsize=20))
+    gt <- textGrob(title,gp=gpar(fontsize=20, fontface="italic"))
     g <- gtable_add_rows(g, heights = grobHeight(gt)*1.5, pos = 0)
     g <- gtable_add_grob(g, gt, 1, 1, 1, ncol(g))
   }
@@ -478,7 +478,7 @@ plot_regional_assoc <- function(recombination.plot, marker.plot, title){
   g$grobs[[13]] <- g2$grobs[[13]]
   g <- gtable_add_cols(g, g1$widths[g1$layout[ia, ]$l], length(g$widths) - 1)
   g <- gtable_add_grob(g, list(textGrob("Recomb. Rate", rot = -90, gp = gpar(col="black", fontsize=14))), pp$t, length(g$widths) - 1, pp$b)
-  gt <- textGrob(title,gp=gpar(fontsize=20, fontface="italic"))
+  gt <- textGrob(title,gp=gpar(fontsize=16, fontface="italic"))
   g <- gtable_add_rows(g, heights = grobHeight(gt)*1.5, pos = 0)
   g <- gtable_add_grob(g, gt, 1, 1, 1, ncol(g))
   g <- gtable_add_padding(g, unit(0.3, "cm"))
@@ -535,7 +535,7 @@ plot_regional_gene_assoc <- function(recombination.plot, marker.plot, gene.plot,
   if(ngenes<=5){g$heights[panels[2]] <- unit(0.75,"null")}
   if(ngenes>5 & ngenes<=10){g$heights[panels[2]] <- unit(1.8,"null")}
   if(ngenes>10){g$heights[panels[2]] <- unit(2.5,"null")}
-  gt <- textGrob(title,gp=gpar(fontsize=20, fontface="italic"))
+  gt <- textGrob(title,gp=gpar(fontsize=16, fontface="italic"))
   g <- gtable_add_rows(g, heights = grobHeight(gt)*1.5, pos = 0)
   g <- gtable_add_grob(g, gt, 1, 1, 1, ncol(g))
   g <- gtable_add_padding(g, unit(0.3, "cm"))
