@@ -333,6 +333,8 @@ assoc_plot <- function(data, corr, ylab=NULL, title=NULL, subtitle=NULL, type="l
   }
   if(ncol(corr)!=nrow(data) | nrow(corr)!=nrow(data)) stop("corr has to have the same dimensions as the number of rows in the dataset")
   # if(any(rownames(corr)!=data$marker)) stop("corr has to have the same markers in the same order as the dataset")
+  if(length(unique(markers$chr))>1) stop("there should only be markers from one chromosome in the markers dataset") 
+  if(!(markers$chr[1] %in% 1:22)) stop("the plotting tool is only for autosomal chromosomes") 
   if(any(is.na(data))) stop("there are missing values in the dataset") 
   if(class(data$pos)!="integer") stop("the pos variable has to be an integer")
 
@@ -347,6 +349,7 @@ assoc_plot <- function(data, corr, ylab=NULL, title=NULL, subtitle=NULL, type="l
   chr <- as.numeric(data$chr[1])
   if(is.null(x.min)){x.min <- as.numeric(min(data$pos))}
   if(is.null(x.max)){x.max <- as.numeric(max(data$pos))}
+  if((x.max - x.min)>5000000) stop("the plotting tool can plot a maximum of 5MB")
 
   # Genes
   gene.region <- genes[genes$chr==chr & !(genes$end<x.min) & !(genes$start>x.max),]
@@ -593,6 +596,7 @@ stack_assoc_plot <- function(markers, z, corr, traits, x.min=NULL, x.max=NULL, t
   chr <- as.numeric(markers$chr[1])
   if(is.null(x.min)){x.min <- min(markers$pos)}
   if(is.null(x.max)){x.max <- max(markers$pos)}
+  if((x.max - x.min)>5000000) stop("the plotting tool can plot a maximum of 5MB")
 
   # mlog10p
   mlog10p <- apply(z, 2, function(x){-(log(2) + pnorm(-abs(x), log.p=T))/log(10)})
