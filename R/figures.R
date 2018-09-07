@@ -393,10 +393,8 @@ assoc_plot <- function(data, corr, ylab=NULL, title=NULL, subtitle=NULL, type="l
 #' @import ggplot2 grid gridExtra gtable
 #' @author James R Staley <js16174@bristol.ac.uk>
 #' @export
-assoc_plot_save <- function(x, file, width=800, height=650){
-  png(file, width=width, height=height)
-  grid.draw(x)
-  dev.off()
+assoc_plot_save <- function(x, file, width=8, height=7){
+  ggsave(file, plot=grid.draw(x), width=width, height=height, units="in", limitsize=F, dpi=400)
 }
 
 ##########################################################
@@ -660,9 +658,7 @@ stack_assoc_plot <- function(markers, z, corr, traits, x.min=NULL, x.max=NULL, t
 #' @author James R Staley <js16174@bristol.ac.uk>
 #' @export
 stack_assoc_plot_save <- function(x, file, n_traits, width=NULL, height=NULL){
-  if(is.null(width)){width <- 800}
-  if(is.null(height)){height <- 650 + 400*(n_traits-1)}  
-  png(file, width=width, height=height)
-  grid.draw(x)
-  dev.off()
+  if(is.null(width)){width <- 8}
+  if(is.null(height)){height <- 3 + 400*(n_traits-1)}  
+  ggsave(file, plot=grid.draw(x), width=width, height=height, units="in", limitsize=F, dpi=400)
 }
