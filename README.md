@@ -27,5 +27,5 @@ head(markers)
 z <- gassocplot::test_stack_assoc_plot_associations  
 head(z)  
 corr <- gassocplot::test_corr   
-plot <- stack_assoc_plot(markers, z, corr, c("Trait 1", "Trait 2")) 
+plot <- stack_assoc_plot(markers, z, corr, c("Trait 1", "Trait 2"))  
 stack_assoc_plot_save(plot, "stack_assoc_plot_test.png", 2)  
