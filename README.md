@@ -2,8 +2,10 @@
 Regional association plots for genetic and epigenetic data.
 
 # Functions
-* assoc_plot - plots a regional association plot for a single trait within a genomic region.  
+* assoc_plot - plots a regional association plot or fine-mapping probability plot for a single trait within a genomic region.  
+* assoc_plot_save - saves a PNG of the assoc_plot.  
 * stack_assoc_plot - plots a stacked regional association plot for multiple traits within a genomic region.  
+* stack_assoc_plot_save - saves a PNG of the stack_assoc_plot.  
 
 # Installation
 1. install.packages("devtools")
