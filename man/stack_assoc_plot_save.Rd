@@ -12,6 +12,10 @@ stack_assoc_plot_save(x, file, n_traits, width = NULL, height = NULL)
 \item{file}{the filepath}
 
 \item{n_traits}{the filepath}
+
+\item{width}{the width of the plot}
+
+\item{height}{the height of the plot}
 }
 \description{
 stack_assoc_plot_save saves a png of the assoc_plot with the correct dimensions
