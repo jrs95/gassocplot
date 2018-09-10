@@ -5,7 +5,7 @@
 \title{assoc_plot}
 \usage{
 assoc_plot(data, corr, ylab = NULL, title = NULL, subtitle = NULL,
-  type = "log10p", x.min = NULL, x.max = NULL)
+  type = "log10p", x.min = NULL, x.max = NULL, legend=TRUE)
 }
 \arguments{
 \item{data}{data.frame with markername (marker), chromosome (chr), position (pos) and either z-statistics (z) or probabilities (prob) columns}
@@ -23,6 +23,8 @@ assoc_plot(data, corr, ylab = NULL, title = NULL, subtitle = NULL,
 \item{x.min}{start of region}
 
 \item{x.max}{end of region}
+  
+\item{legend}{add r2 legend}
 }
 \description{
 assoc_plot plots a scatter graph of associations (e.g. log10 p-values)
