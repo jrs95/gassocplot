@@ -5,7 +5,7 @@
 \title{stack_assoc_plot}
 \usage{
 stack_assoc_plot(markers, z, corr, traits, x.min = NULL, x.max = NULL,
-  top.marker = NULL)
+  top.marker = NULL, legend=TRUE)
 }
 \arguments{
 \item{markers}{data.frame of markers with markername (marker), chromosome (chr) and position (pos)}
@@ -21,6 +21,8 @@ stack_assoc_plot(markers, z, corr, traits, x.min = NULL, x.max = NULL,
 \item{x.max}{end of region}
 
 \item{top.marker}{the marker to be annotated in the plot}
+  
+\item{legend}{add r2 legend}
 }
 \description{
 stack_assoc_plot plots stacked regional association plots
