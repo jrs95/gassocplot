@@ -250,10 +250,11 @@ g_legend<-function(gplot){
 #' @param title title of the plot
 #' @param subtitle subtitle of the plot
 #' @param ngenes number of genes in the genomic region
+#' @param r2_legend add r2 legend
 #' @import ggplot2 grid gridExtra gtable
 #' @author James R Staley <js16174@bristol.ac.uk>
 #' @export
-plot_assoc_combined <- function(recombination.plot, gene.plot, marker.plot, title=NULL, subtitle=NULL, ngenes){
+plot_assoc_combined <- function(recombination.plot, gene.plot, marker.plot, title=NULL, subtitle=NULL, ngenes, r2_legend=TRUE){
   legend <- g_legend(marker.plot); marker.plot <- marker.plot + theme(legend.position="none")
   g1 <- ggplot_gtable(ggplot_build(recombination.plot))
   g2 <- ggplot_gtable(ggplot_build(marker.plot))
@@ -298,9 +299,11 @@ plot_assoc_combined <- function(recombination.plot, gene.plot, marker.plot, titl
     g <- gtable_add_rows(g, heights = grobHeight(gt)*1.5, pos = 0)
     g <- gtable_add_grob(g, gt, 1, 1, 1, ncol(g))
   }
-  lheight <- sum(legend$height)*1.5
   g <- gtable_add_padding(g, unit(0.3, "cm"))
-  g <- grid.arrange(g, legend, ncol = 1, heights = unit.c(unit(1, "npc") - lheight, lheight))
+  if(r2_legend==TRUE){
+    lheight <- sum(legend$height)*1.5
+    g <- grid.arrange(g, legend, ncol = 1, heights = unit.c(unit(1, "npc") - lheight, lheight))
+  }
   return(g)
 }
 
@@ -319,10 +322,11 @@ plot_assoc_combined <- function(recombination.plot, gene.plot, marker.plot, titl
 #' @param type the type of the plot either log10p or probabilities
 #' @param x.min start of region
 #' @param x.max end of region
+#' @param legend add r2 legend
 #' @import ggplot2 grid gridExtra gtable
 #' @author James R Staley <js16174@bristol.ac.uk>
 #' @export
-assoc_plot <- function(data, corr, ylab=NULL, title=NULL, subtitle=NULL, type="log10p", x.min=NULL, x.max=NULL){
+assoc_plot <- function(data, corr, ylab=NULL, title=NULL, subtitle=NULL, type="log10p", x.min=NULL, x.max=NULL, legend=TRUE){
 
   # Error messages
   if(!(type=="log10p" | type=="prob")) stop("the type of plot has to be either log10p or prob")
@@ -377,7 +381,7 @@ assoc_plot <- function(data, corr, ylab=NULL, title=NULL, subtitle=NULL, type="l
   marker.plot <- plot_assoc(data, corr, x.min, x.max, ylab, type)
 
   # Combined plot
-  combined.plot <- plot_assoc_combined(recombination.plot, gene.plot, marker.plot, title, subtitle, ngenes)
+  combined.plot <- plot_assoc_combined(recombination.plot, gene.plot, marker.plot, title, subtitle, ngenes, legend)
 
   return(combined.plot)
 }
@@ -396,7 +400,7 @@ assoc_plot <- function(data, corr, ylab=NULL, title=NULL, subtitle=NULL, type="l
 #' @import ggplot2 grid gridExtra gtable
 #' @author James R Staley <js16174@bristol.ac.uk>
 #' @export
-assoc_plot_save <- function(x, file, width=8, height=7){
+assoc_plot_save <- function(x, file, width=9, height=7){
   ggsave(file, plot=grid.draw(x), width=width, height=height, units="in", limitsize=F, dpi=500)
 }
 
@@ -574,10 +578,11 @@ add_g_legend <- function(g, legend){
 #' @param corr matrix of correlation statistics between markers
 #' @param x.min start of region
 #' @param x.max end of region
+#' @param legend add r2 legend
 #' @import ggplot2 grid gridExtra gtable
 #' @author James R Staley <js16174@bristol.ac.uk>
 #' @export
-stack_assoc_plot <- function(markers, z, corr, traits, x.min=NULL, x.max=NULL, top.marker=NULL){
+stack_assoc_plot <- function(markers, z, corr, traits, x.min=NULL, x.max=NULL, top.marker=NULL, legend=TRUE){
   
   # Error messages
   if(length(traits)!=ncol(z)) stop("the number of traits is not the same as the number of columns for the Z-scores")
@@ -641,7 +646,11 @@ stack_assoc_plot <- function(markers, z, corr, traits, x.min=NULL, x.max=NULL, t
   }
 
   # Combined plot
-  combined.plot <- add_g_legend(g, legend)
+  if(legend==T){
+    combined.plot <- add_g_legend(g, legend)
+  }else{
+    combined.plot <- g
+  }
 
   return(combined.plot)
 }
@@ -662,7 +671,7 @@ stack_assoc_plot <- function(markers, z, corr, traits, x.min=NULL, x.max=NULL, t
 #' @author James R Staley <js16174@bristol.ac.uk>
 #' @export
 stack_assoc_plot_save <- function(x, file, n_traits, width=NULL, height=NULL){
-  if(is.null(width)){width <- 8}
+  if(is.null(width)){width <- 9}
   if(is.null(height)){height <- 3 + 3*n_traits}  
   ggsave(file, plot=grid.draw(x), width=width, height=height, units="in", limitsize=F, dpi=500)
 }
