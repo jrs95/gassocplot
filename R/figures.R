@@ -599,6 +599,7 @@ stack_assoc_plot <- function(markers, z, corr, traits, x.min=NULL, x.max=NULL, t
   # Coerce data
   markers$marker <- as.character(markers$marker)
   chr <- as.numeric(markers$chr[1])
+  r2_legend <- legend
   if(is.null(x.min)){x.min <- min(markers$pos)}
   if(is.null(x.max)){x.max <- max(markers$pos)}
   if((x.max - x.min)>5000000) stop("the plotting tool can plot a maximum of 5MB")
@@ -646,7 +647,7 @@ stack_assoc_plot <- function(markers, z, corr, traits, x.min=NULL, x.max=NULL, t
   }
 
   # Combined plot
-  if(legend==T){
+  if(r2_legend==T){
     combined.plot <- add_g_legend(g, legend)
   }else{
     combined.plot <- g
