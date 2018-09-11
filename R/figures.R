@@ -326,7 +326,7 @@ plot_assoc_combined <- function(recombination.plot, gene.plot, marker.plot, titl
 #' @import ggplot2 grid gridExtra gtable
 #' @author James R Staley <js16174@bristol.ac.uk>
 #' @export
-assoc_plot <- function(data, corr, ylab=NULL, title=NULL, subtitle=NULL, type="log10p", x.min=NULL, x.max=NULL, legend=TRUE){
+assoc_plot <- function(data, corr=NULL, ylab=NULL, title=NULL, subtitle=NULL, type="log10p", x.min=NULL, x.max=NULL, legend=TRUE){
 
   # Error messages
   if(!(type=="log10p" | type=="prob")) stop("the type of plot has to be either log10p or prob")
@@ -365,6 +365,9 @@ assoc_plot <- function(data, corr, ylab=NULL, title=NULL, subtitle=NULL, type="l
   # Max and min
   x.min <- x.min - 0.02*(x.max - x.min)
   x.max <- x.max + 0.02*(x.max - x.min)
+  
+  # Correlation matrix
+  if(is.null(corr)){legend <- FALSE; corr <- matrix(NA, nrow=nrow(markers), ncol=nrow(markers))}
 
   # Recombination plot
   recombination.plot <- plot_recombination_rate(chr, x.min, x.max)
@@ -582,7 +585,7 @@ add_g_legend <- function(g, legend){
 #' @import ggplot2 grid gridExtra gtable
 #' @author James R Staley <js16174@bristol.ac.uk>
 #' @export
-stack_assoc_plot <- function(markers, z, corr, traits, x.min=NULL, x.max=NULL, top.marker=NULL, legend=TRUE){
+stack_assoc_plot <- function(markers, z, corr=NULL, traits, x.min=NULL, x.max=NULL, top.marker=NULL, legend=TRUE){
   
   # Error messages
   if(length(traits)!=ncol(z)) stop("the number of traits is not the same as the number of columns for the Z-scores")
@@ -618,6 +621,9 @@ stack_assoc_plot <- function(markers, z, corr, traits, x.min=NULL, x.max=NULL, t
   # Max and min
   x.min <- x.min - 0.02*(x.max - x.min)
   x.max <- x.max + 0.02*(x.max - x.min)
+  
+  # Correlation matrix
+  if(is.null(corr)){r2_legend <- FALSE; corr <- matrix(NA, nrow=nrow(markers), ncol=nrow(markers))}
 
   # Recombination plot
   recombination.plot <- plot_recombination_rate_stack(chr, x.min, x.max)
