@@ -335,7 +335,7 @@ assoc_plot <- function(data, corr=NULL, ylab=NULL, title=NULL, subtitle=NULL, ty
   }else{
     if(any(names(data)!=c("marker", "chr", "pos", "prob"))) stop("dataset needs to include marker, chr, pos and prob columns in that order")
   }
-  if(ncol(corr)!=nrow(data) | nrow(corr)!=nrow(data)) stop("corr has to have the same dimensions as the number of rows in the dataset")
+  if(!is.null(corr)){if(ncol(corr)!=nrow(data) | nrow(corr)!=nrow(data)) stop("corr has to have the same dimensions as the number of rows in the markers dataset")}
   # if(any(rownames(corr)!=data$marker)) stop("corr has to have the same markers in the same order as the dataset")
   if(length(unique(markers$chr))>1) stop("there should only be markers from one chromosome in the markers dataset") 
   if(!(markers$chr[1] %in% 1:22)) stop("the plotting tool is only for autosomal chromosomes") 
@@ -590,7 +590,7 @@ stack_assoc_plot <- function(markers, z, corr=NULL, traits, x.min=NULL, x.max=NU
   # Error messages
   if(length(traits)!=ncol(z)) stop("the number of traits is not the same as the number of columns for the Z-scores")
   if(nrow(markers)!=nrow(z)) stop("the number of markers is not the same as the number of rows for the Z-scores")
-  if(ncol(corr)!=nrow(markers) | nrow(corr)!=nrow(markers)) stop("corr has to have the same dimensions as the number of rows in the markers dataset")
+  if(!is.null(corr)){if(ncol(corr)!=nrow(markers) | nrow(corr)!=nrow(markers)) stop("corr has to have the same dimensions as the number of rows in the markers dataset")}
   # if(any(rownames(corr)!=markers$marker)) stop("corr has to have the same markers in the same order as the markers dataset")
   if(any(names(markers)!=c("marker", "chr", "pos"))) stop("dataset needs to include marker, chr and pos columns in that order")
   if(length(unique(markers$chr))>1) stop("there should only be markers from one chromosome in the markers dataset") 
