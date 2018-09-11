@@ -4,7 +4,7 @@
 \alias{stack_assoc_plot}
 \title{stack_assoc_plot}
 \usage{
-stack_assoc_plot(markers, z, corr, traits, x.min = NULL, x.max = NULL,
+stack_assoc_plot(markers, z, corr=NULL, traits, x.min = NULL, x.max = NULL,
   top.marker = NULL, legend=TRUE)
 }
 \arguments{
