@@ -4,7 +4,7 @@
 \alias{assoc_plot}
 \title{assoc_plot}
 \usage{
-assoc_plot(data, corr, ylab = NULL, title = NULL, subtitle = NULL,
+assoc_plot(data, corr=NULL, ylab = NULL, title = NULL, subtitle = NULL,
   type = "log10p", x.min = NULL, x.max = NULL, legend=TRUE)
 }
 \arguments{
