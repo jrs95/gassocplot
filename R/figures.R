@@ -596,7 +596,7 @@ stack_assoc_plot <- function(markers, z, corr=NULL, traits, x.min=NULL, x.max=NU
   if(length(unique(markers$chr))>1) stop("there should only be markers from one chromosome in the markers dataset") 
   if(!(markers$chr[1] %in% 1:22)) stop("the plotting tool is only for autosomal chromosomes") 
   if(any(is.na(markers))) stop("there are missing in your marker dataset") 
-  if(any(is.na(z))) stop("there are missing values in the Z-score matrix")
+  # if(any(is.na(z))) stop("there are missing values in the Z-score matrix")
   if(class(markers$pos)!="integer") stop("the pos variable has to be an integer")
 
   # Coerce data
@@ -608,8 +608,8 @@ stack_assoc_plot <- function(markers, z, corr=NULL, traits, x.min=NULL, x.max=NU
   if((x.max - x.min)>5000000) stop("the plotting tool can plot a maximum of 5MB")
 
   # mlog10p
-  mlog10p <- apply(z, 2, function(x){-(log(2) + pnorm(-abs(x), log.p=T))/log(10)})
-  mlog10p[mlog10p>1000] <- 1000
+  mlog10p <- suppressWarnings(apply(z, 2, function(x){-(log(2) + pnorm(-abs(x), log.p=T))/log(10)}))
+  mlog10p[mlog10p>1000 & !is.na(mlog10p)] <- 1000
  
   # Genes
   gene.region <- genes[genes$chr==chr & !(genes$end<x.min) & !(genes$start>x.max),]
