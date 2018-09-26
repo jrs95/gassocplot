@@ -423,17 +423,20 @@ assoc_plot_save <- function(x, file, width=9, height=7){
 #' @author James R Staley <js16174@bristol.ac.uk>
 #' @export
 plot_assoc_stack <- function(data, corr, x.min, x.max, top.marker){
+  miss <- is.na(data$mlog10p)
+  corr <- corr[!miss, !miss]
+  data <- data[!miss,]
   if(length(top.marker)!=0){
     top_marker <- top.marker==data$marker 
-    if(any(top_marker)==F){top_marker <- max.col(replace(t(data$mlog10p), is.na(t(data$mlog10p)), -Inf))} 
+    if(any(top_marker)==F){top_marker <- max.col(t(data$mlog10p))} 
     lead_marker <- data[top_marker,]  
-    ov_lead_marker <- data[max.col(replace(t(data$mlog10p), is.na(t(data$mlog10p)), -Inf)),]
+    ov_lead_marker <- data[max.col(t(data$mlog10p)),]
     if((lead_marker$mlog10p/ov_lead_marker$mlog10p)>0.975){geomtext <- T}else{geomtext <- F}
     lead_marker$label_pos <- lead_marker$pos
     if((x.max-lead_marker$pos)<10000){lead_marker$label_pos <- lead_marker$pos - 0.025*(x.max-x.min)}
     if((lead_marker$pos-x.min)<10000){lead_marker$label_pos <- lead_marker$pos + 0.025*(x.max-x.min)}
   }else{ 
-    top_marker <- max.col(replace(t(data$mlog10p), is.na(t(data$mlog10p)), -Inf))
+    top_marker <- max.col(t(data$mlog10p))
     lead_marker <- data[top_marker,]  
     lead_marker$label_pos <- lead_marker$pos
     if((x.max-lead_marker$pos)<10000){lead_marker$label_pos <- lead_marker$pos - 0.025*(x.max-x.min)}
