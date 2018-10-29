@@ -382,6 +382,8 @@ assoc_plot <- function(data, corr=NULL, ylab=NULL, title=NULL, subtitle=NULL, ty
   # Marker plot
   if(type=="log10p"){ylab <- expression("-log"["10"]*paste("(",italic("p"),")"))}else{if(is.null(ylab)){ylab <- "Probability"}}  
   marker.plot <- plot_assoc(data, corr, x.min, x.max, ylab, type)
+  
+  cat("DONE")
 
   # Combined plot
   combined.plot <- plot_assoc_combined(recombination.plot, gene.plot, marker.plot, title, subtitle, ngenes, legend)
