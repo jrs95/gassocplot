@@ -327,7 +327,7 @@ plot_assoc_combined <- function(recombination.plot, gene.plot, marker.plot, titl
 #' @author James R Staley <js16174@bristol.ac.uk>
 #' @export
 assoc_plot <- function(data, corr=NULL, ylab=NULL, title=NULL, subtitle=NULL, type="log10p", x.min=NULL, x.max=NULL, legend=TRUE){
-
+  
   # Error messages
   if(!(type=="log10p" | type=="prob")) stop("the type of plot has to be either log10p or prob")
   if(type=="log10p"){
@@ -353,7 +353,7 @@ assoc_plot <- function(data, corr=NULL, ylab=NULL, title=NULL, subtitle=NULL, ty
   chr <- as.numeric(data$chr[1])
   if(is.null(x.min)){x.min <- as.numeric(min(data$pos))}
   if(is.null(x.max)){x.max <- as.numeric(max(data$pos))}
-  if((x.max - x.min)>5000000) stop("the plotting tool can plot a maximum of 5MB")
+  if((x.max - x.min)>10000000) stop("the plotting tool can plot a maximum of 10MB")
 
   # Genes
   gene.region <- genes[genes$chr==chr & !(genes$end<x.min) & !(genes$start>x.max),]
@@ -383,8 +383,6 @@ assoc_plot <- function(data, corr=NULL, ylab=NULL, title=NULL, subtitle=NULL, ty
   if(type=="log10p"){ylab <- expression("-log"["10"]*paste("(",italic("p"),")"))}else{if(is.null(ylab)){ylab <- "Probability"}}  
   marker.plot <- plot_assoc(data, corr, x.min, x.max, ylab, type)
   
-  cat("DONE")
-
   # Combined plot
   combined.plot <- plot_assoc_combined(recombination.plot, gene.plot, marker.plot, title, subtitle, ngenes, legend)
 
@@ -610,7 +608,7 @@ stack_assoc_plot <- function(markers, z, corr=NULL, traits, x.min=NULL, x.max=NU
   r2_legend <- legend
   if(is.null(x.min)){x.min <- min(markers$pos)}
   if(is.null(x.max)){x.max <- max(markers$pos)}
-  if((x.max - x.min)>5000000) stop("the plotting tool can plot a maximum of 5MB")
+  if((x.max - x.min)>10000000) stop("the plotting tool can plot a maximum of 10MB")
 
   # mlog10p
   mlog10p <- suppressWarnings(apply(z, 2, function(x){-(log(2) + pnorm(-abs(x), log.p=T))/log(10)}))
