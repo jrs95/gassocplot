@@ -337,8 +337,8 @@ assoc_plot <- function(data, corr=NULL, ylab=NULL, title=NULL, subtitle=NULL, ty
   }
   if(!is.null(corr)){if(ncol(corr)!=nrow(data) | nrow(corr)!=nrow(data)) stop("corr has to have the same dimensions as the number of rows in the markers dataset")}
   # if(any(rownames(corr)!=data$marker)) stop("corr has to have the same markers in the same order as the dataset")
-  if(length(unique(markers$chr))>1) stop("there should only be markers from one chromosome in the markers dataset") 
-  if(!(markers$chr[1] %in% 1:22)) stop("the plotting tool is only for autosomal chromosomes") 
+  if(length(unique(data$chr))>1) stop("there should only be markers from one chromosome in the markers dataset") 
+  if(!(data$chr[1] %in% 1:22)) stop("the plotting tool is only for autosomal chromosomes") 
   if(any(is.na(data))) stop("there are missing values in the dataset") 
   if(class(data$pos)!="integer") stop("the pos variable has to be an integer")
 
