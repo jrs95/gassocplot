@@ -152,7 +152,7 @@ plot_gene_ten <- function(gene.region, chr, x.min, x.max, stack=FALSE) {
   gene.region$mid.point.large.gene <- gene.region$mid.point
   genes.mid.point<-as.matrix(gene.region[, c(1,6,7)])
   genes.df.mid.point <- data.frame(name=genes.mid.point[,1], x=as.numeric(genes.mid.point[,3]), y=(80 - 8*rep(rep(1:10, each=1), ceiling(nrow(genes.mid.point)/10))[1:nrow(genes.mid.point)] + 3.5), stringsAsFactors=F)
-  plot.genes <- plot.genes + geom_text(data=genes.df.mid.point, mapping=aes(x=x, y=y, label=name), color="black", size=3.1, fontface=3) 
+  plot.genes <- plot.genes + geom_text(data=genes.df.mid.point, mapping=aes(x=x, y=y, label=name), color="black", size=3, fontface=3) 
   return(plot.genes)
 }
 
@@ -180,7 +180,7 @@ plot_gene_fifteen <- function(gene.region, chr, x.min, x.max, stack=FALSE) {
   gene.region$mid.point.large.gene <- gene.region$mid.point
   genes.mid.point<-as.matrix(gene.region[, c(1,6,7)])
   genes.df.mid.point <- data.frame(name=genes.mid.point[,1], x=as.numeric(genes.mid.point[,3]), y=(120 - 8*rep(rep(1:15, each=1), ceiling(nrow(genes.mid.point)/10))[1:nrow(genes.mid.point)] + 3.5), stringsAsFactors=F)
-  plot.genes <- plot.genes + geom_text(data=genes.df.mid.point, mapping=aes(x=x, y=y, label=name), color="black", size=2.6, fontface=3) 
+  plot.genes <- plot.genes + geom_text(data=genes.df.mid.point, mapping=aes(x=x, y=y, label=name), color="black", size=2.3, fontface=3) 
   return(plot.genes)
 }
 
