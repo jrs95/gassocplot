@@ -367,7 +367,7 @@ assoc_plot <- function(data, corr=NULL, ylab=NULL, title=NULL, subtitle=NULL, ty
   x.max <- x.max + 0.02*(x.max - x.min)
   
   # Correlation matrix
-  if(is.null(corr)){legend <- FALSE; corr <- matrix(NA, nrow=nrow(markers), ncol=nrow(markers))}
+  if(is.null(corr)){legend <- FALSE; corr <- matrix(NA, nrow=nrow(data), ncol=nrow(data))}
 
   # Recombination plot
   recombination.plot <- plot_recombination_rate(chr, x.min, x.max)
