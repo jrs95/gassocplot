@@ -271,7 +271,11 @@ plot_assoc_combined <- function(recombination.plot, gene.plot, marker.plot, titl
   g$grobs[[3]] <- g2$grobs[[3]]
   g$grobs[[13]] <- g2$grobs[[13]]
   g <- gtable_add_cols(g, g1$widths[g1$layout[ia, ]$l], length(g$widths) - 1)
-  g <- gtable_add_grob(g, list(textGrob("Recombination Rate (cM/Mb)", rot = -90, gp = gpar(col="black", fontsize=16))), pp$t, length(g$widths) - 1, pp$b)
+  if(ngenes<=10){
+    g <- gtable_add_grob(g, list(textGrob("Recombination Rate (cM/Mb)", rot = -90, gp = gpar(col="black", fontsize=16))), pp$t, length(g$widths) - 1, pp$b)
+  }else{
+    g <- gtable_add_grob(g, list(textGrob("Recombination Rate", rot = -90, gp = gpar(col="black", fontsize=16))), pp$t, length(g$widths) - 1, pp$b)
+  }
   g3 <- ggplot_gtable(ggplot_build(gene.plot))
   g3 <- gtable_add_grob(g3, g3$grobs[[which(g3$layout$name == "panel")]], pp$t, pp$l, pp$b, pp$l)
   ia <- which(g3$layout$name == "axis-l")
