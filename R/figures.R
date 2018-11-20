@@ -180,7 +180,7 @@ plot_gene_fifteen <- function(gene.region, chr, x.min, x.max, stack=FALSE) {
   gene.region$mid.point.large.gene <- gene.region$mid.point
   genes.mid.point<-as.matrix(gene.region[, c(1,6,7)])
   genes.df.mid.point <- data.frame(name=genes.mid.point[,1], x=as.numeric(genes.mid.point[,3]), y=(120 - 8*rep(rep(1:15, each=1), ceiling(nrow(genes.mid.point)/10))[1:nrow(genes.mid.point)] + 3.5), stringsAsFactors=F)
-  plot.genes <- plot.genes + geom_text(data=genes.df.mid.point, mapping=aes(x=x, y=y, label=name), color="black", size=2.3, fontface=3) 
+  plot.genes <- plot.genes + geom_text(data=genes.df.mid.point, mapping=aes(x=x, y=y, label=name), color="black", size=2, fontface=3) 
   return(plot.genes)
 }
 
@@ -457,7 +457,7 @@ plot_assoc_stack <- function(data, corr, x.min, x.max, top.marker){
   data$r2 <- factor(data$r2, levels=c("miss", "0.0-0.2", "0.2-0.4", "0.4-0.6", "0.6-0.8", "0.8-1.0"))
   ylim <- max((max(data$mlog10p)+0.2*max(data$mlog10p)),1)
   marker.plot <- ggplot(aes(x=pos,y=mlog10p), data=data) + geom_point(aes(fill=r2), pch=21, size=3) + scale_fill_manual(values=c("#DCDCDC", "#66FFFF", "#66FF66", "#FFCC00", "#FF9933", "#CC3300", "#FF0000"), drop=FALSE) + geom_point(data=lead_marker, aes(x=pos,y=mlog10p), pch=23, colour="black", fill="purple", size=4) + theme_bw() +  ylab(expression("-log"["10"]*paste("(",italic("p"),")"))) + xlab(NULL) + scale_y_continuous(limits=c(0,ylim)) + theme(axis.title.y=element_text(vjust=2.25, size=14), axis.text=element_text(size=12)) + theme(panel.grid.major=element_blank(), panel.grid.minor=element_blank()) + scale_x_continuous(limits=c(x.min, x.max), breaks=NULL) + theme(axis.title=element_text(size=10)) + theme(legend.text=element_text(size=10), legend.title=element_text(size=12), legend.background = element_rect(colour = "black")) + theme(panel.background=element_rect(fill=NA)) + theme(legend.position="bottom") + guides(fill = guide_legend(nrow = 1))
-  if(geomtext){marker.plot <- marker.plot + geom_text(data=lead_marker, aes(x=label_pos,y=mlog10p,label=marker), vjust=-1, hjust=0.5, size=4)}else{marker.plot <- marker.plot + geom_label(data=lead_marker, aes(x=label_pos,y=mlog10p,label=marker), label.r=unit(0, "lines"), nudge_y=(-0.07*ylim), size=4, alpha=1)}
+  if(geomtext){marker.plot <- marker.plot + geom_text(data=lead_marker, aes(x=label_pos,y=mlog10p,label=marker), vjust=-1, hjust=0.5, size=4)}else{marker.plot <- marker.plot + geom_label(data=lead_marker, aes(x=label_pos,y=mlog10p,label=marker), label.r=unit(0, "lines"), nudge_y=(-0.09*ylim), size=4, alpha=1)}
   return(marker.plot)
 }
 
