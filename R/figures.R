@@ -196,6 +196,7 @@ plot_gene_fifteen <- function(gene.region, chr, x.min, x.max, stack=FALSE) {
 #' @param x.min start of region
 #' @param x.max end of region
 #' @param ylab the y-axis label
+#' @param type the type of the plot either log10p or probabilities
 #' @import ggplot2
 #' @author James R Staley <james.staley@bristol.ac.uk>
 #' @export
@@ -418,33 +419,35 @@ assoc_plot_save <- function(x, file, width=9, height=7){
 #' plot_assoc_stack
 #'
 #' plot_assoc_stack plots a scatter graph of -log10p against chromosmal location without gene bar
-#' @param data data.frame with markername (marker), chromosome (chr), position (pos) and association statistic (stat)
+#' @param data data.frame with markername (marker), chromosome (chr), position (pos) and association statistics (stats)
 #' @param corr correlation matrix between markers
 #' @param corr.top correlation statistics between the top marker and the rest of the markers
 #' @param x.min start of region
 #' @param x.max end of region
 #' @param top.marker the top associated marker, i.e. the marker with the largest -log10p
+#' @param ylab the y-axis label
+#' @param type the type of the plot either log10p or probabilities
 #' @import ggplot2
 #' @author James R Staley <james.staley@bristol.ac.uk>
 #' @export
-plot_assoc_stack <- function(data, corr=NULL, corr.top=NULL, x.min, x.max, top.marker){
+plot_assoc_stack <- function(data, corr=NULL, corr.top=NULL, x.min, x.max, top.marker, ylab, type="log10p"){
   if(is.null(corr) & is.null(corr.top)) stop("no correlation statistics were input")
-  miss <- is.na(data$mlog10p)
+  miss <- is.na(data$stats)
   if(!is.null(corr)){corr <- corr[!miss, !miss]}
   if(!is.null(corr.top)){corr.top <- corr.top[!miss]}  
   data <- data[!miss,]
   if(length(top.marker)!=0){
     top_marker <- which(top.marker==data$marker)
     if(length(top_marker)>1){top_marker <- sample(top_marker, 1); if(is.null(corr) & !is.null(corr.top)) }
-    if(length(top_marker)==0){top_marker <- max.col(t(data$mlog10p))} 
+    if(length(top_marker)==0){top_marker <- max.col(t(data$stats))} 
     lead_marker <- data[top_marker,]  
-    ov_lead_marker <- data[max.col(t(data$mlog10p)),]
-    if((lead_marker$mlog10p/ov_lead_marker$mlog10p)>0.975){geomtext <- T}else{geomtext <- F}
+    ov_lead_marker <- data[max.col(t(data$stats)),]
+    if((lead_marker$stats/ov_lead_marker$stats)>0.975){geomtext <- T}else{geomtext <- F}
     lead_marker$label_pos <- lead_marker$pos
     if((x.max-lead_marker$pos)<10000){lead_marker$label_pos <- lead_marker$pos - 0.025*(x.max-x.min)}
     if((lead_marker$pos-x.min)<10000){lead_marker$label_pos <- lead_marker$pos + 0.025*(x.max-x.min)}
   }else{ 
-    top_marker <- max.col(t(data$mlog10p))
+    top_marker <- max.col(t(data$stats))
     lead_marker <- data[top_marker,]  
     lead_marker$label_pos <- lead_marker$pos
     if((x.max-lead_marker$pos)<10000){lead_marker$label_pos <- lead_marker$pos - 0.025*(x.max-x.min)}
@@ -459,9 +462,10 @@ plot_assoc_stack <- function(data, corr=NULL, corr.top=NULL, x.min, x.max, top.m
   data$r2[r2>=0.6 & r2<=0.8 & !is.na(r2)] <- "0.6-0.8"
   data$r2[r2>=0.8 & r2<=1 & !is.na(r2)] <- "0.8-1.0" 
   data$r2 <- factor(data$r2, levels=c("miss", "0.0-0.2", "0.2-0.4", "0.4-0.6", "0.6-0.8", "0.8-1.0"))
-  ylim <- max((max(data$mlog10p)+0.2*max(data$mlog10p)),1)
-  marker.plot <- ggplot(aes(x=pos,y=mlog10p), data=data) + geom_point(aes(fill=r2), pch=21, size=3) + scale_fill_manual(values=c("#DCDCDC", "#66FFFF", "#66FF66", "#FFCC00", "#FF9933", "#CC3300", "#FF0000"), drop=FALSE) + geom_point(data=lead_marker, aes(x=pos,y=mlog10p), pch=23, colour="black", fill="purple", size=4) + theme_bw() +  ylab(expression("-log"["10"]*paste("(",italic("p"),")"))) + xlab(NULL) + scale_y_continuous(limits=c(0,ylim)) + theme(axis.title.y=element_text(vjust=2.25, size=14), axis.text=element_text(size=12)) + theme(panel.grid.major=element_blank(), panel.grid.minor=element_blank()) + scale_x_continuous(limits=c(x.min, x.max), breaks=NULL) + theme(axis.title=element_text(size=10)) + theme(legend.text=element_text(size=10), legend.title=element_text(size=12), legend.background = element_rect(colour = "black")) + theme(panel.background=element_rect(fill=NA)) + theme(legend.position="bottom") + guides(fill = guide_legend(nrow = 1))
-  if(geomtext){marker.plot <- marker.plot + geom_text(data=lead_marker, aes(x=label_pos,y=mlog10p,label=marker), vjust=-1, hjust=0.5, size=4)}else{marker.plot <- marker.plot + geom_label(data=lead_marker, aes(x=label_pos,y=mlog10p,label=marker), label.r=unit(0, "lines"), nudge_y=(-0.1*ylim), size=4, alpha=1)}
+  ylim <- max((max(data$stats)+0.2*max(data$stats)),1)
+  marker.plot <- ggplot(aes(x=pos,y=stats), data=data) + geom_point(aes(fill=r2), pch=21, size=3) + scale_fill_manual(values=c("#DCDCDC", "#66FFFF", "#66FF66", "#FFCC00", "#FF9933", "#CC3300", "#FF0000"), drop=FALSE) + geom_point(data=lead_marker, aes(x=pos,y=stats), pch=23, colour="black", fill="purple", size=4) + theme_bw() +  ylab(ylab) + xlab(NULL) + scale_y_continuous(limits=c(0,ylim)) + theme(axis.title.y=element_text(vjust=2.25, size=14), axis.text=element_text(size=12)) + theme(panel.grid.major=element_blank(), panel.grid.minor=element_blank()) + scale_x_continuous(limits=c(x.min, x.max), breaks=NULL) + theme(axis.title=element_text(size=10)) + theme(legend.text=element_text(size=10), legend.title=element_text(size=12), legend.background = element_rect(colour = "black")) + theme(panel.background=element_rect(fill=NA)) + theme(legend.position="bottom") + guides(fill = guide_legend(nrow = 1))
+  if(geomtext){marker.plot <- marker.plot + geom_text(data=lead_marker, aes(x=label_pos,y=stats,label=marker), vjust=-1, hjust=0.5, size=4)}else{marker.plot <- marker.plot + geom_label(data=lead_marker, aes(x=label_pos,y=stats,label=marker), label.r=unit(0, "lines"), nudge_y=(-0.1*ylim), size=4, alpha=1)}
+  if(type=="prob"){suppressMessages(marker.plot <- marker.plot + scale_y_continuous(limits=c(0,ylim), breaks=c(0, 0.25, 0.5, 0.75, 1)))}
   return(marker.plot)
 }
 
@@ -588,7 +592,7 @@ add_g_legend <- function(g, legend){
 #' @param markers data.frame of markers with markername (marker), chromosome (chr) and position (pos) 
 #' @param top.marker the marker to be annotated in the plot
 #' @param traits trait names
-#' @param z matrix of Z-scores with one column for each trait
+#' @param z matrix of Z-scores or probabilities with one column for each trait
 #' @param corr matrix of correlation statistics between markers
 #' @param corr.top correlation statistics between the top marker and the rest of the markers
 #' @param x.min start of region
@@ -597,9 +601,10 @@ add_g_legend <- function(g, legend){
 #' @import ggplot2 grid gridExtra gtable
 #' @author James R Staley <james.staley@bristol.ac.uk>
 #' @export
-stack_assoc_plot <- function(markers, z, corr=NULL, corr.top=NULL, traits, x.min=NULL, x.max=NULL, top.marker=NULL, legend=TRUE){
+stack_assoc_plot <- function(markers, z, corr=NULL, corr.top=NULL, traits, x.min=NULL, x.max=NULL, top.marker=NULL, ylab, type="log10p", legend=TRUE){
   
   # Error messages
+  if(!(type=="log10p" | type=="prob")) stop("the type of plot has to be either log10p or prob")
   if(length(traits)!=ncol(z)) stop("the number of traits is not the same as the number of columns for the Z-scores")
   if(nrow(markers)!=nrow(z)) stop("the number of markers is not the same as the number of rows for the Z-scores")
   if(!is.null(corr)){if(ncol(corr)!=nrow(markers) | nrow(corr)!=nrow(markers)) stop("corr has to have the same dimensions as the number of rows in the markers dataset")}
@@ -621,8 +626,11 @@ stack_assoc_plot <- function(markers, z, corr=NULL, corr.top=NULL, traits, x.min
   if((x.max - x.min)>10000000) stop("the plotting tool can plot a maximum of 10MB")
 
   # mlog10p
-  mlog10p <- suppressWarnings(apply(z, 2, function(x){-(log(2) + pnorm(-abs(x), log.p=T))/log(10)}))
-  mlog10p[mlog10p>1000 & !is.na(mlog10p)] <- 1000
+  if(type=="log10p"){
+    mlog10p <- suppressWarnings(apply(z, 2, function(x){-(log(2) + pnorm(-abs(x), log.p=T))/log(10)}))
+    mlog10p[mlog10p>1000 & !is.na(mlog10p)] <- 1000
+  }
+  if(type=="log10p"){ylab <- expression("-log"["10"]*paste("(",italic("p"),")"))}else{if(is.null(ylab)){ylab <- "Probability"}}
  
   # Genes
   gene.region <- genes[genes$chr==chr & !(genes$end<x.min) & !(genes$start>x.max),]
@@ -653,8 +661,12 @@ stack_assoc_plot <- function(markers, z, corr=NULL, corr.top=NULL, traits, x.min
   
   # Association plot
   for(i in length(traits):1){
-    data <- data.frame(marker=markers$marker, chr=markers$chr, pos=markers$pos, mlog10p=mlog10p[,i], stringsAsFactors=F)
-    marker.plot <- plot_assoc_stack(data, corr, corr.top, x.min, x.max, top.marker)
+    if(type=="log10p"){
+      data <- data.frame(marker=markers$marker, chr=markers$chr, pos=markers$pos, stats=mlog10p[,i], stringsAsFactors=F)
+    }else{
+      data <- data.frame(marker=markers$marker, chr=markers$chr, pos=markers$pos, stats=z[,i], stringsAsFactors=F)    
+    }
+    marker.plot <- plot_assoc_stack(data, corr, corr.top, x.min, x.max, top.marker, ylab, type)
     legend <- g_legend(marker.plot)
     if(i==length(traits)){g <- plot_regional_gene_assoc(recombination.plot, marker.plot, gene.plot, traits[i], ngenes)}
     if(i<length(traits)){
