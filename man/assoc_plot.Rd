@@ -4,8 +4,9 @@
 \alias{assoc_plot}
 \title{assoc_plot}
 \usage{
-assoc_plot(data, corr=NULL, corr.top=NULL, ylab = NULL, title = NULL, subtitle = NULL,
-  type = "log10p", x.min = NULL, x.max = NULL, top.marker=NULL, legend=TRUE)
+assoc_plot(data, corr=NULL, corr.top=NULL, ylab = NULL, title = NULL,
+  subtitle = NULL, type = "log10p", x.min = NULL, x.max = NULL,
+  top.marker=NULL, legend=TRUE)
 }
 \arguments{
 \item{data}{data.frame with markername (marker), chromosome (chr), position (pos) and either z-statistics (z) or probabilities (prob) columns}
