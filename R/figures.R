@@ -191,22 +191,42 @@ plot_gene_fifteen <- function(gene.region, chr, x.min, x.max, stack=FALSE) {
 #' plot_assoc
 #'
 #' plot_assoc plots a scatter graph of associations (e.g. log10 p-values) 
-#' @param data data.frame with markername (marker), chromosome (chr), position (pos) and association statistics (stats) columns
-#' @param corr correlation matrix between markers 
+#' @param data data.frame with markername (marker), chromosome (chr), position (pos) and association statistics (stats)
+#' @param corr correlation matrix between markers
+#' @param corr.top correlation statistics between the top marker and the rest of the markers
 #' @param x.min start of region
 #' @param x.max end of region
+#' @param top.marker the top associated marker, i.e. the marker with the largest -log10p
 #' @param ylab the y-axis label
 #' @param type the type of the plot either log10p or probabilities
 #' @import ggplot2
 #' @author James R Staley <james.staley@bristol.ac.uk>
 #' @export
-plot_assoc <- function(data, corr, x.min, x.max, ylab, type="log10p"){
-  top_marker <- max.col(t(data$stats))
-  lead_marker <- data[top_marker,]  
-  lead_marker$label_pos <- lead_marker$pos
-  if((x.max-lead_marker$pos)<10000){lead_marker$label_pos <- lead_marker$pos - 0.025*(x.max-x.min)}
-  if((lead_marker$pos-x.min)<10000){lead_marker$label_pos <- lead_marker$pos + 0.025*(x.max-x.min)}
-  r2 <- corr[,top_marker]^2
+plot_assoc <- function(data, corr=NULL, corr.top=NULL, x.min, x.max, top.marker, ylab, type="log10p"){
+  if(is.null(corr) & is.null(corr.top)) stop("no correlation statistics were input")
+  miss <- is.na(data$stats)
+  if(!is.null(corr)){corr <- corr[!miss, !miss]}
+  if(!is.null(corr.top)){corr.top <- corr.top[!miss]}  
+  data <- data[!miss,]
+  if(length(top.marker)!=0){
+    top_marker <- which(top.marker==data$marker)
+    if(length(top_marker)>1){top_marker <- sample(top_marker, 1); if(is.null(corr) & !is.null(corr.top)) }
+    if(length(top_marker)==0){top_marker <- max.col(t(data$stats))} 
+    lead_marker <- data[top_marker,]  
+    ov_lead_marker <- data[max.col(t(data$stats)),]
+    if((lead_marker$stats/ov_lead_marker$stats)>0.975){geomtext <- T}else{geomtext <- F}
+    lead_marker$label_pos <- lead_marker$pos
+    if((x.max-lead_marker$pos)<10000){lead_marker$label_pos <- lead_marker$pos - 0.025*(x.max-x.min)}
+    if((lead_marker$pos-x.min)<10000){lead_marker$label_pos <- lead_marker$pos + 0.025*(x.max-x.min)}
+  }else{ 
+    top_marker <- max.col(t(data$stats))
+    lead_marker <- data[top_marker,]  
+    lead_marker$label_pos <- lead_marker$pos
+    if((x.max-lead_marker$pos)<10000){lead_marker$label_pos <- lead_marker$pos - 0.025*(x.max-x.min)}
+    if((lead_marker$pos-x.min)<10000){lead_marker$label_pos <- lead_marker$pos + 0.025*(x.max-x.min)}
+    geomtext <- T
+  }
+  if(!is.null(corr)){r2 <- corr[,top_marker]^2}else{r2 <- corr.top^2}
   data$r2 <- "miss"
   data$r2[r2<0.2 & !is.na(r2)] <- "0.0-0.2"
   data$r2[r2>=0.2 & r2<=0.4 & !is.na(r2)] <- "0.2-0.4"
@@ -215,7 +235,8 @@ plot_assoc <- function(data, corr, x.min, x.max, ylab, type="log10p"){
   data$r2[r2>=0.8 & r2<=1 & !is.na(r2)] <- "0.8-1.0" 
   data$r2 <- factor(data$r2, levels=c("miss", "0.0-0.2", "0.2-0.4", "0.4-0.6", "0.6-0.8", "0.8-1.0"))
   ylim <- max((max(data$stats)+0.1*max(data$stats)),1)
-  marker.plot <- ggplot(aes(x=pos, y=stats), data=data) + geom_point(aes(fill=r2), pch=21, size=3.5) + scale_fill_manual(values=c("#DCDCDC", "#66FFFF", "#66FF66", "#FFCC00", "#FF9933", "#CC3300", "#FF0000"), drop=FALSE) + geom_point(data=lead_marker, aes(pos,stats), pch=23, colour="black", fill="purple", size=4)  + theme_bw() + geom_text(data=lead_marker, aes(label_pos,stats,label=marker), vjust=-1, hjust=0.5, size=4.5) +  ylab(ylab) + xlab(NULL) + scale_y_continuous(limits=c(0,ylim)) + theme(axis.title.y=element_text(vjust=2.25, size=16), axis.text=element_text(size=14)) + theme(panel.grid.major=element_blank(), panel.grid.minor=element_blank()) + scale_x_continuous(limits=c(x.min,x.max), breaks=NULL) + theme(axis.title=element_text(size=10)) + theme(legend.text=element_text(size=11), legend.title=element_text(size=12), legend.background = element_rect(colour = "black")) + theme(panel.background=element_rect(fill=NA)) + theme(legend.position="bottom") + guides(fill = guide_legend(nrow = 1))
+  marker.plot <- ggplot(aes(x=pos, y=stats), data=data) + geom_point(aes(fill=r2), pch=21, size=3.5) + scale_fill_manual(values=c("#DCDCDC", "#66FFFF", "#66FF66", "#FFCC00", "#FF9933", "#CC3300", "#FF0000"), drop=FALSE) + geom_point(data=lead_marker, aes(pos,stats), pch=23, colour="black", fill="purple", size=4)  + theme_bw() + ylab(ylab) + xlab(NULL) + scale_y_continuous(limits=c(0,ylim)) + theme(axis.title.y=element_text(vjust=2.25, size=16), axis.text=element_text(size=14)) + theme(panel.grid.major=element_blank(), panel.grid.minor=element_blank()) + scale_x_continuous(limits=c(x.min,x.max), breaks=NULL) + theme(axis.title=element_text(size=10)) + theme(legend.text=element_text(size=11), legend.title=element_text(size=12), legend.background = element_rect(colour = "black")) + theme(panel.background=element_rect(fill=NA)) + theme(legend.position="bottom") + guides(fill = guide_legend(nrow = 1))
+  if(geomtext){marker.plot <- marker.plot + geom_text(data=lead_marker, aes(x=label_pos,y=stats,label=marker), vjust=-1, hjust=0.5, size=4.5)}else{marker.plot <- marker.plot + geom_label(data=lead_marker, aes(x=label_pos,y=stats,label=marker), label.r=unit(0, "lines"), nudge_y=(-0.1*ylim), size=4.5, alpha=1)}
   if(type=="prob"){suppressMessages(marker.plot <- marker.plot + scale_y_continuous(limits=c(0,ylim), breaks=c(0, 0.25, 0.5, 0.75, 1)))}
   return(marker.plot)
 }
