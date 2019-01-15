@@ -12,6 +12,8 @@ assoc_plot(data, corr=NULL, corr.top=NULL, ylab = NULL, title = NULL, subtitle =
 
 \item{corr}{correlation matrix between markers}
 
+\item{corr.top}{correlation statistics between the top marker and the rest of the markers}
+  
 \item{ylab}{the y-axis label}
 
 \item{title}{title of the plot}
@@ -23,6 +25,8 @@ assoc_plot(data, corr=NULL, corr.top=NULL, ylab = NULL, title = NULL, subtitle =
 \item{x.min}{start of region}
 
 \item{x.max}{end of region}
+
+\item{top.marker}{the top associated marker, i.e. the marker with the largest -log10p or probability}
   
 \item{legend}{add r2 legend}
 }
@@ -30,5 +34,5 @@ assoc_plot(data, corr=NULL, corr.top=NULL, ylab = NULL, title = NULL, subtitle =
 assoc_plot plots a scatter graph of associations (e.g. log10 p-values)
 }
 \author{
-James R Staley <js16174@bristol.ac.uk>
+James R Staley <james.staley@bristol.ac.uk>
 }
