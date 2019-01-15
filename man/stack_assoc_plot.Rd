@@ -4,16 +4,18 @@
 \alias{stack_assoc_plot}
 \title{stack_assoc_plot}
 \usage{
-stack_assoc_plot(markers, z, corr=NULL, traits, x.min = NULL, x.max = NULL,
+stack_assoc_plot(markers, z, corr=NULL, corr.top=NULL, traits, x.min = NULL, x.max = NULL,
   top.marker = NULL, legend=TRUE)
 }
 \arguments{
 \item{markers}{data.frame of markers with markername (marker), chromosome (chr) and position (pos)}
 
-\item{z}{matrix of Z-scores with one column for each trait}
+\item{z}{matrix of Z-scores or probabilities with one column for each trait}
 
 \item{corr}{matrix of correlation statistics between markers}
 
+\item{corr.top}{correlation statistics between the top marker and the rest of the markers}
+  
 \item{traits}{trait names}
 
 \item{x.min}{start of region}
@@ -28,5 +30,5 @@ stack_assoc_plot(markers, z, corr=NULL, traits, x.min = NULL, x.max = NULL,
 stack_assoc_plot plots stacked regional association plots
 }
 \author{
-James R Staley <js16174@bristol.ac.uk>
+James R Staley <james.staley@bristol.ac.uk>
 }
