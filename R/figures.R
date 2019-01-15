@@ -196,7 +196,7 @@ plot_gene_fifteen <- function(gene.region, chr, x.min, x.max, stack=FALSE) {
 #' @param corr.top correlation statistics between the top marker and the rest of the markers
 #' @param x.min start of region
 #' @param x.max end of region
-#' @param top.marker the top associated marker, i.e. the marker with the largest -log10p
+#' @param top.marker the top associated marker, i.e. the marker with the largest -log10p or probability
 #' @param ylab the y-axis label
 #' @param type the type of the plot either log10p or probabilities
 #' @import ggplot2
@@ -350,7 +350,7 @@ plot_assoc_combined <- function(recombination.plot, gene.plot, marker.plot, titl
 #' @param type the type of the plot either log10p or probabilities
 #' @param x.min start of region
 #' @param x.max end of region
-#' @param top.marker the top associated marker, i.e. the marker with the largest -log10p
+#' @param top.marker the top associated marker, i.e. the marker with the largest -log10p or probability
 #' @param legend add r2 legend
 #' @import ggplot2 grid gridExtra gtable
 #' @author James R Staley <james.staley@bristol.ac.uk>
@@ -449,7 +449,7 @@ assoc_plot_save <- function(x, file, width=9, height=7){
 #' @param corr.top correlation statistics between the top marker and the rest of the markers
 #' @param x.min start of region
 #' @param x.max end of region
-#' @param top.marker the top associated marker, i.e. the marker with the largest -log10p
+#' @param top.marker the top associated marker, i.e. the marker with the largest -log10p or probability
 #' @param ylab the y-axis label
 #' @param type the type of the plot either log10p or probabilities
 #' @import ggplot2
@@ -623,7 +623,7 @@ add_g_legend <- function(g, legend){
 #' @param type the type of the plot either log10p or probabilities
 #' @param x.min start of region
 #' @param x.max end of region
-#' @param top.marker the top associated marker, i.e. the marker with the largest -log10p
+#' @param top.marker the top associated marker, i.e. the marker with the largest -log10p or probability
 #' @param legend add r2 legend
 #' @import ggplot2 grid gridExtra gtable
 #' @author James R Staley <james.staley@bristol.ac.uk>
