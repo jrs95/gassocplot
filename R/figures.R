@@ -191,7 +191,7 @@ plot_gene_fifteen <- function(gene.region, chr, x.min, x.max, stack=FALSE) {
 #' plot_assoc
 #'
 #' plot_assoc plots a scatter graph of associations (e.g. log10 p-values) 
-#' @param data data.frame with markername (marker), chromosome (chr), position (pos) and statistics (stats) columns
+#' @param data data.frame with markername (marker), chromosome (chr), position (pos) and association statistics (stats) columns
 #' @param corr correlation matrix between markers 
 #' @param x.min start of region
 #' @param x.max end of region
@@ -418,21 +418,25 @@ assoc_plot_save <- function(x, file, width=9, height=7){
 #' plot_assoc_stack
 #'
 #' plot_assoc_stack plots a scatter graph of -log10p against chromosmal location without gene bar
-#' @param data data.frame with markername (marker), chromosome (chr), position (pos) and -log10p (mlog10p)
+#' @param data data.frame with markername (marker), chromosome (chr), position (pos) and association statistic (stat)
 #' @param corr correlation matrix between markers
+#' @param corr.top correlation statistics between the top marker and the rest of the markers
 #' @param x.min start of region
 #' @param x.max end of region
 #' @param top.marker the top associated marker, i.e. the marker with the largest -log10p
 #' @import ggplot2
 #' @author James R Staley <james.staley@bristol.ac.uk>
 #' @export
-plot_assoc_stack <- function(data, corr, x.min, x.max, top.marker){
+plot_assoc_stack <- function(data, corr=NULL, corr.top=NULL, x.min, x.max, top.marker){
+  if(is.null(corr) & is.null(corr.top)) stop("no correlation statistics were input")
   miss <- is.na(data$mlog10p)
-  corr <- corr[!miss, !miss]
+  if(!is.null(corr)){corr <- corr[!miss, !miss]}
+  if(!is.null(corr.top)){corr.top <- corr.top[!miss]}  
   data <- data[!miss,]
   if(length(top.marker)!=0){
-    top_marker <- top.marker==data$marker 
-    if(any(top_marker)==F){top_marker <- max.col(t(data$mlog10p))} 
+    top_marker <- which(top.marker==data$marker)
+    if(length(top_marker)>1){top_marker <- sample(top_marker, 1); if(is.null(corr) & !is.null(corr.top)) }
+    if(length(top_marker)==0){top_marker <- max.col(t(data$mlog10p))} 
     lead_marker <- data[top_marker,]  
     ov_lead_marker <- data[max.col(t(data$mlog10p)),]
     if((lead_marker$mlog10p/ov_lead_marker$mlog10p)>0.975){geomtext <- T}else{geomtext <- F}
@@ -447,7 +451,7 @@ plot_assoc_stack <- function(data, corr, x.min, x.max, top.marker){
     if((lead_marker$pos-x.min)<10000){lead_marker$label_pos <- lead_marker$pos + 0.025*(x.max-x.min)}
     geomtext <- T
   }
-  r2 <- corr[,top_marker]^2
+  if(!is.null(corr)){r2 <- corr[,top_marker]^2}else{r2 <- corr.top^2}
   data$r2 <- "miss"
   data$r2[r2<0.2 & !is.na(r2)] <- "0.0-0.2"
   data$r2[r2>=0.2 & r2<=0.4 & !is.na(r2)] <- "0.2-0.4"
@@ -586,18 +590,20 @@ add_g_legend <- function(g, legend){
 #' @param traits trait names
 #' @param z matrix of Z-scores with one column for each trait
 #' @param corr matrix of correlation statistics between markers
+#' @param corr.top correlation statistics between the top marker and the rest of the markers
 #' @param x.min start of region
 #' @param x.max end of region
 #' @param legend add r2 legend
 #' @import ggplot2 grid gridExtra gtable
 #' @author James R Staley <james.staley@bristol.ac.uk>
 #' @export
-stack_assoc_plot <- function(markers, z, corr=NULL, traits, x.min=NULL, x.max=NULL, top.marker=NULL, legend=TRUE){
+stack_assoc_plot <- function(markers, z, corr=NULL, corr.top=NULL, traits, x.min=NULL, x.max=NULL, top.marker=NULL, legend=TRUE){
   
   # Error messages
   if(length(traits)!=ncol(z)) stop("the number of traits is not the same as the number of columns for the Z-scores")
   if(nrow(markers)!=nrow(z)) stop("the number of markers is not the same as the number of rows for the Z-scores")
   if(!is.null(corr)){if(ncol(corr)!=nrow(markers) | nrow(corr)!=nrow(markers)) stop("corr has to have the same dimensions as the number of rows in the markers dataset")}
+  if(!is.null(corr.top)){if(length(corr.top)!=nrow(markers)) stop("corr.top has to have the same length as the number of rows in the markers dataset")}
   # if(any(rownames(corr)!=markers$marker)) stop("corr has to have the same markers in the same order as the markers dataset")
   if(any(names(markers)!=c("marker", "chr", "pos"))) stop("dataset needs to include marker, chr and pos columns in that order")
   if(length(unique(markers$chr))>1) stop("there should only be markers from one chromosome in the markers dataset") 
@@ -630,7 +636,7 @@ stack_assoc_plot <- function(markers, z, corr=NULL, traits, x.min=NULL, x.max=NU
   x.max <- x.max + 0.02*(x.max - x.min)
   
   # Correlation matrix
-  if(is.null(corr)){r2_legend <- FALSE; corr <- matrix(NA, nrow=nrow(markers), ncol=nrow(markers))}
+  if(is.null(corr) & is.null(corr.top)){r2_legend <- FALSE; corr <- matrix(NA, nrow=nrow(markers), ncol=nrow(markers))}
 
   # Recombination plot
   recombination.plot <- plot_recombination_rate_stack(chr, x.min, x.max)
@@ -648,7 +654,7 @@ stack_assoc_plot <- function(markers, z, corr=NULL, traits, x.min=NULL, x.max=NU
   # Association plot
   for(i in length(traits):1){
     data <- data.frame(marker=markers$marker, chr=markers$chr, pos=markers$pos, mlog10p=mlog10p[,i], stringsAsFactors=F)
-    marker.plot <- plot_assoc_stack(data, corr, x.min, x.max, top.marker)
+    marker.plot <- plot_assoc_stack(data, corr, corr.top, x.min, x.max, top.marker)
     legend <- g_legend(marker.plot)
     if(i==length(traits)){g <- plot_regional_gene_assoc(recombination.plot, marker.plot, gene.plot, traits[i], ngenes)}
     if(i<length(traits)){
