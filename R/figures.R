@@ -624,7 +624,7 @@ add_g_legend <- function(g, legend){
 #' @import ggplot2 grid gridExtra gtable
 #' @author James R Staley <james.staley@bristol.ac.uk>
 #' @export
-stack_assoc_plot <- function(markers, z, corr=NULL, corr.top=NULL, traits, x.min=NULL, x.max=NULL, top.marker=NULL, ylab, type="log10p", legend=TRUE){
+stack_assoc_plot <- function(markers, z, corr=NULL, corr.top=NULL, traits, x.min=NULL, x.max=NULL, top.marker=NULL, ylab=NULL, type="log10p", legend=TRUE){
   
   # Error messages
   if(!(type=="log10p" | type=="prob")) stop("the type of plot has to be either log10p or prob")
