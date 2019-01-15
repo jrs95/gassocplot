@@ -353,7 +353,7 @@ plot_assoc_combined <- function(recombination.plot, gene.plot, marker.plot, titl
 #' @import ggplot2 grid gridExtra gtable
 #' @author James R Staley <james.staley@bristol.ac.uk>
 #' @export
-assoc_plot <- function(data, corr=NULL, corr.top=NULL, ylab=NULL, title=NULL, subtitle=NULL, type="log10p", x.min=NULL, x.max=NULL, legend=TRUE){
+assoc_plot <- function(data, corr=NULL, corr.top=NULL, ylab=NULL, title=NULL, subtitle=NULL, type="log10p", x.min=NULL, x.max=NULL, top.marker=NULL, legend=TRUE){
   
   # Error messages
   if(!(type=="log10p" | type=="prob")) stop("the type of plot has to be either log10p or prob")
@@ -639,6 +639,7 @@ stack_assoc_plot <- function(markers, z, corr=NULL, corr.top=NULL, traits, x.min
   if(any(is.na(markers))) stop("there are missing in your marker dataset") 
   # if(any(is.na(z))) stop("there are missing values in the Z-score matrix")
   if(class(markers$pos)!="integer") stop("the pos variable has to be an integer")
+  if(is.null(corr) & !is.null(corr.top) & is.null(top.marker)) stop("top.marker must be defined if corr.top is provided")
 
   # Coerce data
   markers$marker <- as.character(markers$marker)
