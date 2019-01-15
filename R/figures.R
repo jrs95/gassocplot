@@ -19,7 +19,7 @@
 #' @param x.min start of region
 #' @param x.max end of region
 #' @import ggplot2
-#' @author James R Staley <js16174@bristol.ac.uk>
+#' @author James R Staley <james.staley@bristol.ac.uk>
 #' @export
 plot_recombination_rate <- function(chr, x.min, x.max) {
   recombination.data <- genetic_map[(genetic_map$chr==chr & genetic_map$pos>=x.min & genetic_map$pos<=x.max), ]
@@ -37,7 +37,7 @@ plot_recombination_rate <- function(chr, x.min, x.max) {
 #' @param x.min start of region
 #' @param x.max end of region
 #' @import ggplot2
-#' @author James R Staley <js16174@bristol.ac.uk>
+#' @author James R Staley <james.staley@bristol.ac.uk>
 #' @export
 plot_recombination_rate_stack <- function(chr, x.min, x.max) {
   recombination.data <- genetic_map[(genetic_map$chr==chr & genetic_map$pos>=x.min & genetic_map$pos<=x.max), ]
@@ -59,7 +59,7 @@ plot_recombination_rate_stack <- function(chr, x.min, x.max) {
 #' @param x.min start of region
 #' @param x.max end of region
 #' @import ggplot2
-#' @author James R Staley <js16174@bristol.ac.uk>
+#' @author James R Staley <james.staley@bristol.ac.uk>
 #' @export
 plot_gene_zero <- function(chr, x.min, x.max, stack=FALSE){
   genes.df.pos <- data.frame(pos=c(x.min,x.max), y=c(10,5), stringsAsFactors=F, stack=FALSE) 
@@ -80,7 +80,7 @@ plot_gene_zero <- function(chr, x.min, x.max, stack=FALSE){
 #' @param x.min start of region
 #' @param x.max end of region
 #' @import ggplot2
-#' @author James R Staley <js16174@bristol.ac.uk>
+#' @author James R Staley <james.staley@bristol.ac.uk>
 #' @export
 plot_gene_two <- function(gene.region, chr, x.min, x.max, stack=FALSE) {
   genes.start.stop <- as.matrix(gene.region[, c("start", "end")])
@@ -108,7 +108,7 @@ plot_gene_two <- function(gene.region, chr, x.min, x.max, stack=FALSE) {
 #' @param x.min start of region
 #' @param x.max end of region
 #' @import ggplot2
-#' @author James R Staley <js16174@bristol.ac.uk>
+#' @author James R Staley <james.staley@bristol.ac.uk>
 #' @export
 plot_gene_five <- function(gene.region, chr, x.min, x.max, stack=FALSE) {
   genes.start.stop <- as.matrix(gene.region[, c("start", "end")])
@@ -136,7 +136,7 @@ plot_gene_five <- function(gene.region, chr, x.min, x.max, stack=FALSE) {
 #' @param x.min start of region
 #' @param x.max end of region
 #' @import ggplot2
-#' @author James R Staley <js16174@bristol.ac.uk>
+#' @author James R Staley <james.staley@bristol.ac.uk>
 #' @export
 plot_gene_ten <- function(gene.region, chr, x.min, x.max, stack=FALSE) {
   genes.start.stop <- as.matrix(gene.region[, c("start", "end")])
@@ -164,7 +164,7 @@ plot_gene_ten <- function(gene.region, chr, x.min, x.max, stack=FALSE) {
 #' @param x.min start of region
 #' @param x.max end of region
 #' @import ggplot2
-#' @author James R Staley <js16174@bristol.ac.uk>
+#' @author James R Staley <james.staley@bristol.ac.uk>
 #' @export
 plot_gene_fifteen <- function(gene.region, chr, x.min, x.max, stack=FALSE) {
   genes.start.stop <- as.matrix(gene.region[, c("start", "end")])
@@ -197,7 +197,7 @@ plot_gene_fifteen <- function(gene.region, chr, x.min, x.max, stack=FALSE) {
 #' @param x.max end of region
 #' @param ylab the y-axis label
 #' @import ggplot2
-#' @author James R Staley <js16174@bristol.ac.uk>
+#' @author James R Staley <james.staley@bristol.ac.uk>
 #' @export
 plot_assoc <- function(data, corr, x.min, x.max, ylab, type="log10p"){
   top_marker <- max.col(t(data$stats))
@@ -228,7 +228,7 @@ plot_assoc <- function(data, corr, x.min, x.max, ylab, type="log10p"){
 #' g_legend 
 #' @param gplot a ggplot
 #' @import ggplot2 grid gridExtra gtable
-#' @author James R Staley <js16174@bristol.ac.uk>
+#' @author James R Staley <james.staley@bristol.ac.uk>
 #' @export
 g_legend<-function(gplot){
   tmp <- ggplot_gtable(ggplot_build(gplot))
@@ -252,7 +252,7 @@ g_legend<-function(gplot){
 #' @param ngenes number of genes in the genomic region
 #' @param r2_legend add r2 legend
 #' @import ggplot2 grid gridExtra gtable
-#' @author James R Staley <js16174@bristol.ac.uk>
+#' @author James R Staley <james.staley@bristol.ac.uk>
 #' @export
 plot_assoc_combined <- function(recombination.plot, gene.plot, marker.plot, title=NULL, subtitle=NULL, ngenes, r2_legend=TRUE){
   legend <- g_legend(marker.plot); marker.plot <- marker.plot + theme(legend.position="none")
@@ -328,7 +328,7 @@ plot_assoc_combined <- function(recombination.plot, gene.plot, marker.plot, titl
 #' @param x.max end of region
 #' @param legend add r2 legend
 #' @import ggplot2 grid gridExtra gtable
-#' @author James R Staley <js16174@bristol.ac.uk>
+#' @author James R Staley <james.staley@bristol.ac.uk>
 #' @export
 assoc_plot <- function(data, corr=NULL, ylab=NULL, title=NULL, subtitle=NULL, type="log10p", x.min=NULL, x.max=NULL, legend=TRUE){
   
@@ -405,7 +405,7 @@ assoc_plot <- function(data, corr=NULL, ylab=NULL, title=NULL, subtitle=NULL, ty
 #' @param width the width of the plot
 #' @param height the height of the plot
 #' @import ggplot2 grid gridExtra gtable
-#' @author James R Staley <js16174@bristol.ac.uk>
+#' @author James R Staley <james.staley@bristol.ac.uk>
 #' @export
 assoc_plot_save <- function(x, file, width=9, height=7){
   ggsave(file, plot=grid.draw(x), width=width, height=height, units="in", limitsize=F, dpi=500)
@@ -424,7 +424,7 @@ assoc_plot_save <- function(x, file, width=9, height=7){
 #' @param x.max end of region
 #' @param top.marker the top associated marker, i.e. the marker with the largest -log10p
 #' @import ggplot2
-#' @author James R Staley <js16174@bristol.ac.uk>
+#' @author James R Staley <james.staley@bristol.ac.uk>
 #' @export
 plot_assoc_stack <- function(data, corr, x.min, x.max, top.marker){
   miss <- is.na(data$mlog10p)
@@ -472,7 +472,7 @@ plot_assoc_stack <- function(data, corr, x.min, x.max, top.marker){
 #' @param marker.plot association scatter plot
 #' @param title title of the plot
 #' @import ggplot2 grid gridExtra gtable
-#' @author James R Staley <js16174@bristol.ac.uk>
+#' @author James R Staley <james.staley@bristol.ac.uk>
 #' @export
 plot_regional_assoc <- function(recombination.plot, marker.plot, title){
   marker.plot <- marker.plot + theme(legend.position="none")
@@ -512,7 +512,7 @@ plot_regional_assoc <- function(recombination.plot, marker.plot, title){
 #' @param title title of the plot
 #' @param ngenes number of genes in the genomic region
 #' @import ggplot2 grid gridExtra gtable
-#' @author James R Staley <js16174@bristol.ac.uk>
+#' @author James R Staley <james.staley@bristol.ac.uk>
 #' @export
 plot_regional_gene_assoc <- function(recombination.plot, marker.plot, gene.plot, title, ngenes){
   marker.plot <- marker.plot + theme(legend.position="none")
@@ -566,7 +566,7 @@ plot_regional_gene_assoc <- function(recombination.plot, marker.plot, gene.plot,
 #' @param g a ggplot
 #' @param legend legend
 #' @import ggplot2 grid gridExtra gtable
-#' @author James R Staley <js16174@bristol.ac.uk>
+#' @author James R Staley <james.staley@bristol.ac.uk>
 #' @export
 add_g_legend <- function(g, legend){
   lheight <- sum(legend$height)*1.5
@@ -590,7 +590,7 @@ add_g_legend <- function(g, legend){
 #' @param x.max end of region
 #' @param legend add r2 legend
 #' @import ggplot2 grid gridExtra gtable
-#' @author James R Staley <js16174@bristol.ac.uk>
+#' @author James R Staley <james.staley@bristol.ac.uk>
 #' @export
 stack_assoc_plot <- function(markers, z, corr=NULL, traits, x.min=NULL, x.max=NULL, top.marker=NULL, legend=TRUE){
   
@@ -682,7 +682,7 @@ stack_assoc_plot <- function(markers, z, corr=NULL, traits, x.min=NULL, x.max=NU
 #' @param width the width of the plot
 #' @param height the height of the plot
 #' @import ggplot2 grid gridExtra gtable
-#' @author James R Staley <js16174@bristol.ac.uk>
+#' @author James R Staley <james.staley@bristol.ac.uk>
 #' @export
 stack_assoc_plot_save <- function(x, file, n_traits, width=NULL, height=NULL){
   if(is.null(width)){width <- 8}
