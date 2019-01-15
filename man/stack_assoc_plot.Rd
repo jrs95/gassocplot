@@ -4,8 +4,8 @@
 \alias{stack_assoc_plot}
 \title{stack_assoc_plot}
 \usage{
-stack_assoc_plot(markers, z, corr=NULL, corr.top=NULL, traits, ylab=NULL, type="log10p", x.min = NULL, x.max = NULL,
-  top.marker = NULL, legend=TRUE)
+stack_assoc_plot(markers, z, corr=NULL, corr.top=NULL, traits, ylab=NULL, type="log10p", 
+  x.min = NULL, x.max = NULL, top.marker = NULL, legend=TRUE)
 }
 \arguments{
 \item{markers}{data.frame of markers with markername (marker), chromosome (chr) and position (pos)}
