@@ -202,15 +202,16 @@ plot_gene_fifteen <- function(gene.region, chr, x.min, x.max, stack=FALSE) {
 #' @import ggplot2
 #' @author James R Staley <james.staley@bristol.ac.uk>
 #' @export
-plot_assoc <- function(data, corr=NULL, corr.top=NULL, x.min, x.max, top.marker, ylab, type="log10p"){
+plot_assoc <- function(data, corr=NULL, corr.top=NULL, x.min, x.max, top.marker=NULL, ylab, type="log10p"){
   if(is.null(corr) & is.null(corr.top)) stop("no correlation statistics were input")
+  if(is.null(corr) & !is.null(corr.top) & is.null(top.marker)) stop("top.marker must be defined if corr.top is provided")
   miss <- is.na(data$stats)
   if(!is.null(corr)){corr <- corr[!miss, !miss]}
   if(!is.null(corr.top)){corr.top <- corr.top[!miss]}  
   data <- data[!miss,]
   if(length(top.marker)!=0){
     top_marker <- which(top.marker==data$marker)
-    if(length(top_marker)>1){top_marker <- sample(top_marker, 1); if(is.null(corr) & !is.null(corr.top)) }
+    if(length(top_marker)>1){top_marker <- sample(top_marker, 1); if(is.null(corr) & !is.null(corr.top)) warning("top.marker maps to multiple markers")}
     if(length(top_marker)==0){top_marker <- max.col(t(data$stats))} 
     lead_marker <- data[top_marker,]  
     ov_lead_marker <- data[max.col(t(data$stats)),]
@@ -352,7 +353,7 @@ plot_assoc_combined <- function(recombination.plot, gene.plot, marker.plot, titl
 #' @import ggplot2 grid gridExtra gtable
 #' @author James R Staley <james.staley@bristol.ac.uk>
 #' @export
-assoc_plot <- function(data, corr=NULL, ylab=NULL, title=NULL, subtitle=NULL, type="log10p", x.min=NULL, x.max=NULL, legend=TRUE){
+assoc_plot <- function(data, corr=NULL, corr.top=NULL, ylab=NULL, title=NULL, subtitle=NULL, type="log10p", x.min=NULL, x.max=NULL, legend=TRUE){
   
   # Error messages
   if(!(type=="log10p" | type=="prob")) stop("the type of plot has to be either log10p or prob")
@@ -367,6 +368,7 @@ assoc_plot <- function(data, corr=NULL, ylab=NULL, title=NULL, subtitle=NULL, ty
   if(!(data$chr[1] %in% 1:22)) stop("the plotting tool is only for autosomal chromosomes") 
   if(any(is.na(data))) stop("there are missing values in the dataset") 
   if(class(data$pos)!="integer") stop("the pos variable has to be an integer")
+  if(is.null(corr) & !is.null(corr.top) & is.null(top.marker)) stop("top.marker must be defined if corr.top is provided")
 
   # Dataset
   if(type=="log10p"){
@@ -393,7 +395,7 @@ assoc_plot <- function(data, corr=NULL, ylab=NULL, title=NULL, subtitle=NULL, ty
   x.max <- x.max + 0.02*(x.max - x.min)
   
   # Correlation matrix
-  if(is.null(corr)){legend <- FALSE; corr <- matrix(NA, nrow=nrow(data), ncol=nrow(data))}
+  if(is.null(corr) & is.null(corr.top)){r2_legend <- FALSE; corr <- matrix(NA, nrow=nrow(markers), ncol=nrow(markers))}
   
   # Recombination plot
   recombination.plot <- plot_recombination_rate(chr, x.min, x.max)
@@ -407,7 +409,7 @@ assoc_plot <- function(data, corr=NULL, ylab=NULL, title=NULL, subtitle=NULL, ty
   
   # Marker plot
   if(type=="log10p"){ylab <- expression("-log"["10"]*paste("(",italic("p"),")"))}else{if(is.null(ylab)){ylab <- "Probability"}}  
-  marker.plot <- plot_assoc(data, corr, x.min, x.max, ylab, type)
+  marker.plot <- plot_assoc(data, corr, corr.top x.min, x.max, top.marker, ylab, type)
   
   # Combined plot
   combined.plot <- plot_assoc_combined(recombination.plot, gene.plot, marker.plot, title, subtitle, ngenes, legend)
@@ -451,7 +453,7 @@ assoc_plot_save <- function(x, file, width=9, height=7){
 #' @import ggplot2
 #' @author James R Staley <james.staley@bristol.ac.uk>
 #' @export
-plot_assoc_stack <- function(data, corr=NULL, corr.top=NULL, x.min, x.max, top.marker, ylab, type="log10p"){
+plot_assoc_stack <- function(data, corr=NULL, corr.top=NULL, x.min, x.max, top.marker=NULL, ylab, type="log10p"){
   if(is.null(corr) & is.null(corr.top)) stop("no correlation statistics were input")
   miss <- is.na(data$stats)
   if(!is.null(corr)){corr <- corr[!miss, !miss]}
@@ -459,7 +461,7 @@ plot_assoc_stack <- function(data, corr=NULL, corr.top=NULL, x.min, x.max, top.m
   data <- data[!miss,]
   if(length(top.marker)!=0){
     top_marker <- which(top.marker==data$marker)
-    if(length(top_marker)>1){top_marker <- sample(top_marker, 1); if(is.null(corr) & !is.null(corr.top)) }
+    if(length(top_marker)>1){top_marker <- sample(top_marker, 1); if(is.null(corr) & !is.null(corr.top)) warning("top.marker maps to multiple markers")}
     if(length(top_marker)==0){top_marker <- max.col(t(data$stats))} 
     lead_marker <- data[top_marker,]  
     ov_lead_marker <- data[max.col(t(data$stats)),]
