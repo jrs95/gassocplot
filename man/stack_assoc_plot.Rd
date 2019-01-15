@@ -4,7 +4,7 @@
 \alias{stack_assoc_plot}
 \title{stack_assoc_plot}
 \usage{
-stack_assoc_plot(markers, z, corr=NULL, corr.top=NULL, traits, x.min = NULL, x.max = NULL,
+stack_assoc_plot(markers, z, corr=NULL, corr.top=NULL, traits, ylab=NULL, type="log10p", x.min = NULL, x.max = NULL,
   top.marker = NULL, legend=TRUE)
 }
 \arguments{
@@ -18,6 +18,10 @@ stack_assoc_plot(markers, z, corr=NULL, corr.top=NULL, traits, x.min = NULL, x.m
   
 \item{traits}{trait names}
 
+\item{ylab}{the y-axis label}
+
+\item{type}{the type of the plot either log10p or probabilities}
+  
 \item{x.min}{start of region}
 
 \item{x.max}{end of region}
