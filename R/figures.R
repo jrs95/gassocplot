@@ -430,6 +430,7 @@ assoc_plot <- function(data, corr=NULL, corr.top=NULL, ylab=NULL, title=NULL, su
 #' @param file the filepath
 #' @param width the width of the plot
 #' @param height the height of the plot
+#' @param dpi the resolution of the plot
 #' @import ggplot2 grid gridExtra gtable
 #' @author James R Staley <james.staley@bristol.ac.uk>
 #' @export
@@ -727,6 +728,7 @@ stack_assoc_plot <- function(markers, z, corr=NULL, corr.top=NULL, traits, ylab=
 #' @param n_traits the filepath
 #' @param width the width of the plot
 #' @param height the height of the plot
+#' @param dpi the resolution of the plot
 #' @import ggplot2 grid gridExtra gtable
 #' @author James R Staley <james.staley@bristol.ac.uk>
 #' @export
