@@ -4,7 +4,7 @@
 \alias{assoc_plot_save}
 \title{assoc_plot_save}
 \usage{
-assoc_plot_save(x, file, width = 9, height = 7, dpi=300)
+assoc_plot_save(x, file, width = 9, height = 7, dpi=500)
 }
 \arguments{
 \item{x}{the plot}
@@ -21,5 +21,5 @@ assoc_plot_save(x, file, width = 9, height = 7, dpi=300)
 assoc_plot_save saves a png of the assoc_plot with the correct dimensions
 }
 \author{
-James R Staley <js16174@bristol.ac.uk>
+James R Staley <james.staley@bristol.ac.uk>
 }
