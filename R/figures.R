@@ -149,9 +149,9 @@ plot_gene_five <- function(gene.region, chr, x.min, x.max, stack=FALSE) {
 plot_gene_ten <- function(gene.region, chr, x.min, x.max, stack=FALSE) {
   small.gene <- (as.numeric(gene.region$end) - as.numeric(gene.region$start)) < (x.max-x.min)/250
   print(gene.region[small.gene,1])
-  mid.point <- as.numeric(gene.region$start)+(as.numeric(gene.region$end) - as.numeric(gene.region$start))/2
-  gene.region$start[small.gene] <- mid.point[small.gene] - (x.max-x.min)/250
-  gene.region$end[small.gene] <- mid.point[small.gene] + (x.max-x.min)/250
+  gene.region$mid.point <- as.numeric(gene.region$start)+(as.numeric(gene.region$end) - as.numeric(gene.region$start))/2
+  gene.region$start[small.gene] <- gene.region$mid.point[small.gene] - (x.max-x.min)/250
+  gene.region$end[small.gene] <- gene.region$mid.point[small.gene] + (x.max-x.min)/250
   gene.region$diff <- (as.numeric(gene.region$end) - as.numeric(gene.region$start))
   print(gene.region)
   genes.start.stop <- as.matrix(gene.region[, c("start", "end")])
@@ -165,9 +165,8 @@ plot_gene_ten <- function(gene.region, chr, x.min, x.max, stack=FALSE) {
   }
   plot.genes <- plot.pos + geom_line(data=genes.df.pos, aes(x=pos, y=y, group=name), colour="blue4", size=0.8) 
   gene.region$mid.point <- as.numeric(gene.region$start)+(as.numeric(gene.region$end) - as.numeric(gene.region$start))/2
-  gene.region$mid.point.large.gene <- gene.region$mid.point
-  genes.mid.point<-as.matrix(gene.region[, c(1,6,7)])
-  genes.df.mid.point <- data.frame(name=genes.mid.point[,1], x=as.numeric(genes.mid.point[,3]), y=(80 - 8*rep(rep(1:10, each=1), ceiling(nrow(genes.mid.point)/10))[1:nrow(genes.mid.point)] + 3.5), stringsAsFactors=F)
+  genes.mid.point<-as.matrix(gene.region[, c(1,6)])
+  genes.df.mid.point <- data.frame(name=genes.mid.point[,1], x=as.numeric(genes.mid.point[,2]), y=(80 - 8*rep(rep(1:10, each=1), ceiling(nrow(genes.mid.point)/10))[1:nrow(genes.mid.point)] + 3.5), stringsAsFactors=F)
   plot.genes <- plot.genes + geom_text(data=genes.df.mid.point, mapping=aes(x=x, y=y, label=name), color="black", size=3, fontface=3) 
   return(plot.genes)
 }
