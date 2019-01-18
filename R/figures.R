@@ -148,6 +148,7 @@ plot_gene_five <- function(gene.region, chr, x.min, x.max, stack=FALSE) {
 #' @export
 plot_gene_ten <- function(gene.region, chr, x.min, x.max, stack=FALSE) {
   small.gene <- (as.numeric(gene.region$end) - as.numeric(gene.region$start)) < (x.max-x.min)/250
+  print(gene.region[small.gene,1])
   gene.region$start[small.gene] <- (as.numeric(gene.region$start[small.gene])+(as.numeric(gene.region$end[small.gene]) - as.numeric(gene.region$start[small.gene]))/2) - (x.max-x.min)/250
   gene.region$end[small.gene] <- (as.numeric(gene.region$start[small.gene])+(as.numeric(gene.region$end[small.gene]) - as.numeric(gene.region$start[small.gene]))/2) + (x.max-x.min)/250
   genes.start.stop <- as.matrix(gene.region[, c("start", "end")])
