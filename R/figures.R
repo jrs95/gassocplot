@@ -151,6 +151,8 @@ plot_gene_ten <- function(gene.region, chr, x.min, x.max, stack=FALSE) {
   print(gene.region[small.gene,1])
   gene.region$start[small.gene] <- (as.numeric(gene.region$start[small.gene])+(as.numeric(gene.region$end[small.gene]) - as.numeric(gene.region$start[small.gene]))/2) - (x.max-x.min)/250
   gene.region$end[small.gene] <- (as.numeric(gene.region$start[small.gene])+(as.numeric(gene.region$end[small.gene]) - as.numeric(gene.region$start[small.gene]))/2) + (x.max-x.min)/250
+  gene.region$diff <- (as.numeric(gene.region$end) - as.numeric(gene.region$start))
+  print(gene.region)
   genes.start.stop <- as.matrix(gene.region[, c("start", "end")])
   genes.df.pos <- data.frame(name=paste0("gene",rep(1:nrow(genes.start.stop), each=2)), pos=as.vector(t(genes.start.stop)), y=(80 - 8*rep(rep(1:10, each=2), ceiling(nrow(genes.start.stop)/10))[1:(2*nrow(genes.start.stop))]), stringsAsFactors=F)
   # plot.pos <- ggplot(data=genes.df.pos, aes(x=pos, y=y)) + geom_point(data=genes.df.pos, mapping=aes(x=pos, y=y, group=name), color="blue4", size=0.5, shape=15) + theme_bw() + xlab(paste0("Position on chromosome ", chr)) + ylab(" ") +  scale_y_continuous(limits=c(-1,81), breaks=c(10,20), labels=c("      ", "      ")) + theme(axis.title.y=element_text(vjust=2), axis.title.x=element_text(vjust=-0.5), axis.ticks.y = element_blank(), panel.grid.major = element_blank(), panel.grid.minor = element_blank()) + scale_x_continuous(limits=c(x.min, x.max))
