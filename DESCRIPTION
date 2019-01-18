@@ -16,5 +16,6 @@ Imports:
     ggplot2,
     grid,
     gridExtra,
-    gtable
+    gtable,
+    R.devices
 RoxygenNote: 6.0.1
