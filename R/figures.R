@@ -83,9 +83,10 @@ plot_gene_zero <- function(chr, x.min, x.max, stack=FALSE){
 #' @author James R Staley <james.staley@bristol.ac.uk>
 #' @export
 plot_gene_two <- function(gene.region, chr, x.min, x.max, stack=FALSE) {
-  small.gene <- (as.numeric(gene.region$end) - as.numeric(gene.region$start)) < (x.max-x.min)/250
-  gene.region$start[small.gene] <- (as.numeric(gene.region$start[small.gene])+(as.numeric(gene.region$end[small.gene]) - as.numeric(gene.region$start[small.gene]))/2) - (x.max-x.min)/250
-  gene.region$end[small.gene] <- (as.numeric(gene.region$start[small.gene])+(as.numeric(gene.region$end[small.gene]) - as.numeric(gene.region$start[small.gene]))/2) + (x.max-x.min)/250
+  small.gene <- (as.numeric(gene.region$end) - as.numeric(gene.region$start)) < (x.max-x.min)/190
+  gene.region$mid.point <- as.numeric(gene.region$start)+(as.numeric(gene.region$end) - as.numeric(gene.region$start))/2
+  gene.region$start[small.gene] <- gene.region$mid.point[small.gene] - (x.max-x.min)/380
+  gene.region$end[small.gene] <- gene.region$mid.point[small.gene] + (x.max-x.min)/380
   genes.start.stop <- as.matrix(gene.region[, c("start", "end")])  
   genes.df.pos <- data.frame(name=paste0("gene",rep(1:nrow(genes.start.stop), each=2)), pos=as.vector(t(genes.start.stop)), y=(16 - 8*rep(rep(1:2, each=2), ceiling(nrow(genes.start.stop)/2))[1:(2*nrow(genes.start.stop))]), stringsAsFactors=F)
   # plot.pos <- ggplot(data=genes.df.pos, aes(x=pos, y=y)) + geom_point(data=genes.df.pos, mapping=aes(x=pos, y=y, group=name), color="blue4", size=0.5, shape=15) + theme_bw() + xlab(paste0("Position on chromosome ", chr)) + ylab(" ") +  scale_y_continuous(limits=c(-5,17), breaks=c(8,16), labels=c("      ", "      ")) + theme(axis.title.y=element_text(vjust=2), axis.title.x=element_text(vjust=-0.5), axis.ticks.y = element_blank(), panel.grid.major = element_blank(), panel.grid.minor = element_blank()) + scale_x_continuous(limits=c(x.min, x.max))
@@ -96,10 +97,7 @@ plot_gene_two <- function(gene.region, chr, x.min, x.max, stack=FALSE) {
     plot.pos <- plot.pos + theme(axis.title=element_text(size=16), axis.text=element_text(size=14))
   }
   plot.genes <- plot.pos + geom_line(data=genes.df.pos, aes(x=pos, y=y, group=name), colour="blue4", size=0.8) 
-  gene.region$mid.point <- as.numeric(gene.region$start)+(as.numeric(gene.region$end) - as.numeric(gene.region$start))/2
-  gene.region$mid.point.large.gene <- gene.region$mid.point
-  genes.mid.point<-as.matrix(gene.region[, c(1,6,7)])
-  genes.df.mid.point <- data.frame(name=genes.mid.point[,1], x=as.numeric(genes.mid.point[,3]), y=(16 - 8*rep(rep(1:2, each=1), ceiling(nrow(genes.mid.point)/2))[1:nrow(genes.mid.point)] + 3.6), stringsAsFactors=F)
+  genes.df.mid.point <- data.frame(name=genes.region$gene, x=as.numeric(genes.region$mid.point), y=(16 - 8*rep(rep(1:2, each=1), ceiling(nrow(genes.mid.point)/2))[1:nrow(genes.mid.point)] + 3.6), stringsAsFactors=F)
   plot.genes <- plot.genes + geom_text(data=genes.df.mid.point, mapping=aes(x=x, y=y, label=name), color="black", size=4, fontface=3) 
   return(plot.genes)
 }
@@ -115,9 +113,10 @@ plot_gene_two <- function(gene.region, chr, x.min, x.max, stack=FALSE) {
 #' @author James R Staley <james.staley@bristol.ac.uk>
 #' @export
 plot_gene_five <- function(gene.region, chr, x.min, x.max, stack=FALSE) {
-  small.gene <- (as.numeric(gene.region$end) - as.numeric(gene.region$start)) < (x.max-x.min)/250
-  gene.region$start[small.gene] <- (as.numeric(gene.region$start[small.gene])+(as.numeric(gene.region$end[small.gene]) - as.numeric(gene.region$start[small.gene]))/2) - (x.max-x.min)/250
-  gene.region$end[small.gene] <- (as.numeric(gene.region$start[small.gene])+(as.numeric(gene.region$end[small.gene]) - as.numeric(gene.region$start[small.gene]))/2) + (x.max-x.min)/250
+  small.gene <- (as.numeric(gene.region$end) - as.numeric(gene.region$start)) < (x.max-x.min)/190
+  gene.region$mid.point <- as.numeric(gene.region$start)+(as.numeric(gene.region$end) - as.numeric(gene.region$start))/2
+  gene.region$start[small.gene] <- gene.region$mid.point[small.gene] - (x.max-x.min)/380
+  gene.region$end[small.gene] <- gene.region$mid.point[small.gene] + (x.max-x.min)/380
   genes.start.stop <- as.matrix(gene.region[, c("start", "end")])
   genes.df.pos <- data.frame(name=paste0("gene",rep(1:nrow(genes.start.stop), each=2)), pos=as.vector(t(genes.start.stop)), y=(40 - 8*rep(rep(1:5, each=2), ceiling(nrow(genes.start.stop)/5))[1:(2*nrow(genes.start.stop))]), stringsAsFactors=F)
   # plot.pos <- ggplot(data=genes.df.pos, aes(x=pos, y=y)) + geom_point(data=genes.df.pos, mapping=aes(x=pos, y=y, group=name), color="blue4", size=0.5, shape=15) + theme_bw() + xlab(paste0("Position on chromosome ", chr)) + ylab(" ") +  scale_y_continuous(limits=c(-1,41), breaks=c(8,16), labels=c("      ", "      ")) + theme(axis.title.y=element_text(vjust=2), axis.title.x=element_text(vjust=-0.5), axis.ticks.y = element_blank(), panel.grid.major = element_blank(), panel.grid.minor = element_blank()) + scale_x_continuous(limits=c(x.min, x.max))
@@ -128,10 +127,7 @@ plot_gene_five <- function(gene.region, chr, x.min, x.max, stack=FALSE) {
     plot.pos <- plot.pos + theme(axis.title=element_text(size=16), axis.text=element_text(size=14))
   }
   plot.genes <- plot.pos + geom_line(data=genes.df.pos, aes(x=pos, y=y, group=name), colour="blue4", size=0.8) 
-  gene.region$mid.point <- as.numeric(gene.region$start)+(as.numeric(gene.region$end) - as.numeric(gene.region$start))/2
-  gene.region$mid.point.large.gene <- gene.region$mid.point
-  genes.mid.point<-as.matrix(gene.region[, c(1,6,7)])
-  genes.df.mid.point <- data.frame(name=genes.mid.point[,1], x=as.numeric(genes.mid.point[,3]), y=(40 - 8*rep(rep(1:5, each=1), ceiling(nrow(genes.mid.point)/5))[1:nrow(genes.mid.point)] + 3.7), stringsAsFactors=F)
+  genes.df.mid.point <- data.frame(name=genes.region$gene, x=as.numeric(genes.region$mid.point), y=(40 - 8*rep(rep(1:5, each=1), ceiling(nrow(genes.mid.point)/5))[1:nrow(genes.mid.point)] + 3.7), stringsAsFactors=F)
   plot.genes <- plot.genes + geom_text(data=genes.df.mid.point, mapping=aes(x=x, y=y, label=name), color="black", size=3.5, fontface=3) 
   return(plot.genes)
 }
@@ -147,10 +143,10 @@ plot_gene_five <- function(gene.region, chr, x.min, x.max, stack=FALSE) {
 #' @author James R Staley <james.staley@bristol.ac.uk>
 #' @export
 plot_gene_ten <- function(gene.region, chr, x.min, x.max, stack=FALSE) {
-  small.gene <- (as.numeric(gene.region$end) - as.numeric(gene.region$start)) < (x.max-x.min)/200
+  small.gene <- (as.numeric(gene.region$end) - as.numeric(gene.region$start)) < (x.max-x.min)/190
   gene.region$mid.point <- as.numeric(gene.region$start)+(as.numeric(gene.region$end) - as.numeric(gene.region$start))/2
-  gene.region$start[small.gene] <- gene.region$mid.point[small.gene] - (x.max-x.min)/400
-  gene.region$end[small.gene] <- gene.region$mid.point[small.gene] + (x.max-x.min)/400
+  gene.region$start[small.gene] <- gene.region$mid.point[small.gene] - (x.max-x.min)/380
+  gene.region$end[small.gene] <- gene.region$mid.point[small.gene] + (x.max-x.min)/380
   gene.region$diff <- (as.numeric(gene.region$end) - as.numeric(gene.region$start))
   print(gene.region)
   genes.start.stop <- as.matrix(gene.region[, c("start", "end")])
@@ -163,9 +159,7 @@ plot_gene_ten <- function(gene.region, chr, x.min, x.max, stack=FALSE) {
     plot.pos <- plot.pos + theme(axis.title=element_text(size=16), axis.text=element_text(size=14))
   }
   plot.genes <- plot.pos + geom_line(data=genes.df.pos, aes(x=pos, y=y, group=name), colour="blue4", size=0.8) 
-  gene.region$mid.point <- as.numeric(gene.region$start)+(as.numeric(gene.region$end) - as.numeric(gene.region$start))/2
-  genes.mid.point<-as.matrix(gene.region[, c(1,6)])
-  genes.df.mid.point <- data.frame(name=genes.mid.point[,1], x=as.numeric(genes.mid.point[,2]), y=(80 - 8*rep(rep(1:10, each=1), ceiling(nrow(genes.mid.point)/10))[1:nrow(genes.mid.point)] + 3.5), stringsAsFactors=F)
+  genes.df.mid.point <- data.frame(name=genes.region$gene, x=as.numeric(genes.region$mid.point), y=(80 - 8*rep(rep(1:10, each=1), ceiling(nrow(genes.mid.point)/10))[1:nrow(genes.mid.point)] + 3.5), stringsAsFactors=F)
   plot.genes <- plot.genes + geom_text(data=genes.df.mid.point, mapping=aes(x=x, y=y, label=name), color="black", size=3, fontface=3) 
   return(plot.genes)
 }
@@ -181,9 +175,10 @@ plot_gene_ten <- function(gene.region, chr, x.min, x.max, stack=FALSE) {
 #' @author James R Staley <james.staley@bristol.ac.uk>
 #' @export
 plot_gene_fifteen <- function(gene.region, chr, x.min, x.max, stack=FALSE) {
-  small.gene <- (as.numeric(gene.region$end) - as.numeric(gene.region$start)) < (x.max-x.min)/250
-  gene.region$start[small.gene] <- (as.numeric(gene.region$start[small.gene])+(as.numeric(gene.region$end[small.gene]) - as.numeric(gene.region$start[small.gene]))/2) - (x.max-x.min)/250
-  gene.region$end[small.gene] <- (as.numeric(gene.region$start[small.gene])+(as.numeric(gene.region$end[small.gene]) - as.numeric(gene.region$start[small.gene]))/2) + (x.max-x.min)/250
+  small.gene <- (as.numeric(gene.region$end) - as.numeric(gene.region$start)) < (x.max-x.min)/190
+  gene.region$mid.point <- as.numeric(gene.region$start)+(as.numeric(gene.region$end) - as.numeric(gene.region$start))/2
+  gene.region$start[small.gene] <- gene.region$mid.point[small.gene] - (x.max-x.min)/380
+  gene.region$end[small.gene] <- gene.region$mid.point[small.gene] + (x.max-x.min)/380
   genes.start.stop <- as.matrix(gene.region[, c("start", "end")])
   genes.df.pos <- data.frame(name=paste0("gene",rep(1:nrow(genes.start.stop), each=2)), pos=as.vector(t(genes.start.stop)), y=(120 - 8*rep(rep(1:15, each=2), ceiling(nrow(genes.start.stop)/15))[1:(2*nrow(genes.start.stop))]), stringsAsFactors=F)
   # plot.pos <- ggplot(data=genes.df.pos, aes(x=pos, y=y)) + geom_point(data=genes.df.pos, mapping=aes(x=pos, y=y, group=name), color="blue4", size=0.3, shape=15) + theme_bw() + xlab(paste0("Position on chromosome ", chr)) + ylab(" ") +  scale_y_continuous(limits=c(-1,121), breaks=c(10,20), labels=c("      ", "      ")) + theme(axis.title.y=element_text(vjust=2), axis.title.x=element_text(vjust=-0.5), axis.ticks.y = element_blank(), panel.grid.major = element_blank(), panel.grid.minor = element_blank()) + scale_x_continuous(limits=c(x.min, x.max))
@@ -194,10 +189,7 @@ plot_gene_fifteen <- function(gene.region, chr, x.min, x.max, stack=FALSE) {
     plot.pos <- plot.pos + theme(axis.title=element_text(size=16), axis.text=element_text(size=14))
   }
   plot.genes <- plot.pos + geom_line(data=genes.df.pos, aes(x=pos, y=y, group=name), colour="blue4", size=0.7) 
-  gene.region$mid.point <- as.numeric(gene.region$start)+(as.numeric(gene.region$end) - as.numeric(gene.region$start))/2
-  gene.region$mid.point.large.gene <- gene.region$mid.point
-  genes.mid.point<-as.matrix(gene.region[, c(1,6,7)])
-  genes.df.mid.point <- data.frame(name=genes.mid.point[,1], x=as.numeric(genes.mid.point[,3]), y=(120 - 8*rep(rep(1:15, each=1), ceiling(nrow(genes.mid.point)/10))[1:nrow(genes.mid.point)] + 3.5), stringsAsFactors=F)
+  genes.df.mid.point <- data.frame(name=genes.region$gene, x=as.numeric(genes.region$mid.point), y=(120 - 8*rep(rep(1:15, each=1), ceiling(nrow(genes.mid.point)/10))[1:nrow(genes.mid.point)] + 3.5), stringsAsFactors=F)
   plot.genes <- plot.genes + geom_text(data=genes.df.mid.point, mapping=aes(x=x, y=y, label=name), color="black", size=2, fontface=3) 
   return(plot.genes)
 }
