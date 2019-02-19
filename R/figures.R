@@ -5,7 +5,7 @@
 ## University of Bristol                                              ## 
 ## Email: james.staley@bristol.ac.uk                                  ##
 ##                                                                    ##
-## 18/01/19                                                           ##
+## 19/02/19                                                           ##
 ########################################################################
 
 ##########################################################
@@ -391,9 +391,9 @@ assoc_plot <- function(data, corr=NULL, corr.top=NULL, ylab=NULL, title=NULL, su
   }else{data$stats <- data$prob}
   data <- data[,c("marker", "chr", "pos", "stats")]
   data$marker <- as.character(data$marker)
-  chr <- as.numeric(data$chr[1])
-  if(is.null(x.min)){x.min <- as.numeric(min(data$pos))}
-  if(is.null(x.max)){x.max <- as.numeric(max(data$pos))}
+  chr <- as.integer(data$chr[1])
+  if(is.null(x.min)){x.min <- min(as.integer(data$pos))}
+  if(is.null(x.max)){x.max <- max(as.integer(data$pos))}
   if((x.max - x.min)>10000000) stop("the plotting tool can plot a maximum of 10MB")
 
   # Genes
@@ -421,6 +421,8 @@ assoc_plot <- function(data, corr=NULL, corr.top=NULL, ylab=NULL, title=NULL, su
   if(ngenes>25){gene.plot <- plot_gene_fifteen(gene.region, chr, x.min, x.max)}
   
   # Marker plot
+  data$chr <- as.integer(data$chr)
+  data$pos <- as.integer(data$pos)
   if(type=="log10p"){ylab <- expression("-log"["10"]*paste("(",italic("p"),")"))}else{if(is.null(ylab)){ylab <- "Probability"}}  
   marker.plot <- plot_assoc(data, corr, corr.top, x.min, x.max, top.marker, ylab, type)
   
@@ -664,8 +666,8 @@ stack_assoc_plot <- function(markers, z, corr=NULL, corr.top=NULL, traits, ylab=
   markers$marker <- as.character(markers$marker)
   chr <- as.numeric(markers$chr[1])
   r2_legend <- legend
-  if(is.null(x.min)){x.min <- min(markers$pos)}
-  if(is.null(x.max)){x.max <- max(markers$pos)}
+  if(is.null(x.min)){x.min <- min(as.integer(data$pos))}
+  if(is.null(x.max)){x.max <- max(as.integer(data$pos))}
   if((x.max - x.min)>10000000) stop("the plotting tool can plot a maximum of 10MB")
 
   # mlog10p
@@ -705,9 +707,9 @@ stack_assoc_plot <- function(markers, z, corr=NULL, corr.top=NULL, traits, ylab=
   # Association plot
   for(i in length(traits):1){
     if(type=="log10p"){
-      data <- data.frame(marker=markers$marker, chr=markers$chr, pos=markers$pos, stats=mlog10p[,i], stringsAsFactors=F)
+      data <- data.frame(marker=markers$marker, chr=as.integer(markers$chr), pos=as.integer(markers$pos), stats=mlog10p[,i], stringsAsFactors=F)
     }else{
-      data <- data.frame(marker=markers$marker, chr=markers$chr, pos=markers$pos, stats=z[,i], stringsAsFactors=F)    
+      data <- data.frame(marker=markers$marker, chr=as.integer(markers$chr), pos=as.integer(markers$pos), stats=z[,i], stringsAsFactors=F)    
     }
     marker.plot <- plot_assoc_stack(data, corr, corr.top, x.min, x.max, top.marker, ylab, type)
     legend <- g_legend(marker.plot)
