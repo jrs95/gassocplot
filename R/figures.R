@@ -380,8 +380,8 @@ assoc_plot <- function(data, corr=NULL, corr.top=NULL, ylab=NULL, title=NULL, su
   if(class(data$pos)!="integer") stop("the pos variable has to be an integer")
   if(is.null(corr) & !is.null(corr.top) & is.null(top.marker)) stop("top.marker must be defined if corr.top is provided")
   if(is.null(corr) & !is.null(corr.top)){if(length(corr.top)!=nrow(data)) stop("corr.top has to have the same length as the number of rows in the markers dataset")}
-  if(!is.null(top.marker) & which(top.marker==data$marker)==0) stop("top.marker is not contained in the markers dataset")
-  if(!is.null(top.marker) & which(top.marker==data$marker)>1) stop("top.marker maps to multiple markers in the markers dataset")
+  if(!is.null(top.marker) & length(which(top.marker==data$marker))==0) stop("top.marker is not contained in the markers dataset")
+  if(!is.null(top.marker) & length(which(top.marker==data$marker))>1) stop("top.marker maps to multiple markers in the markers dataset")
 
   # Dataset
   if(type=="log10p"){
@@ -659,8 +659,8 @@ stack_assoc_plot <- function(markers, z, corr=NULL, corr.top=NULL, traits, ylab=
   if(class(markers$pos)!="integer") stop("the pos variable has to be an integer")
   if(is.null(corr) & !is.null(corr.top) & is.null(top.marker)) stop("top.marker must be defined if corr.top is provided")
   if(is.null(corr) & !is.null(corr.top)){if(length(corr.top)!=nrow(markers)) stop("corr.top has to have the same length as the number of rows in the markers dataset")}
-  if(!is.null(top.marker) & which(top.marker==markers$marker)==0) stop("top.marker is not contained in the markers dataset")
-  if(!is.null(top.marker) & which(top.marker==markers$marker)>1) stop("top.marker maps to multiple markers in the markers dataset")
+  if(!is.null(top.marker) & length(which(top.marker==markers$marker))==0) stop("top.marker is not contained in the markers dataset")
+  if(!is.null(top.marker) & length(which(top.marker==markers$marker))>1) stop("top.marker maps to multiple markers in the markers dataset")
 
   # Coerce data
   markers$marker <- as.character(markers$marker)
