@@ -29,3 +29,6 @@ head(z)
 corr <- gassocplot::test_corr   
 plot <- stack_assoc_plot(markers, z, corr, traits=c("Trait 1", "Trait 2"))  
 stack_assoc_plot_save(plot, "stack_assoc_plot_test.png", 2)  
+
+## Citation
+Please cite this github repository: https://github.com/jrs95/gassocplot
