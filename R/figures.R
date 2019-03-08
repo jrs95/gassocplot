@@ -669,6 +669,8 @@ stack_assoc_plot <- function(markers, z, corr=NULL, corr.top=NULL, traits, ylab=
   if(is.null(x.min)){x.min <- min(as.integer(data$pos))}
   if(is.null(x.max)){x.max <- max(as.integer(data$pos))}
   if((x.max - x.min)>10000000) stop("the plotting tool can plot a maximum of 10MB")
+  
+  print("DONE")
 
   # mlog10p
   if(type=="log10p"){
@@ -703,6 +705,8 @@ stack_assoc_plot <- function(markers, z, corr=NULL, corr.top=NULL, traits, ylab=
 
   # Top marker
   if(length(top.marker)!=0){if(is.na(top.marker)){top.marker <- NULL}}
+  
+  print("DONE")
   
   # Association plot
   for(i in length(traits):1){
