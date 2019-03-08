@@ -652,26 +652,24 @@ stack_assoc_plot <- function(markers, z, corr=NULL, corr.top=NULL, traits, ylab=
   if(!is.null(corr.top)){if(length(corr.top)!=nrow(markers)) stop("corr.top has to have the same length as the number of rows in the markers dataset")}
   # if(any(rownames(corr)!=markers$marker)) stop("corr has to have the same markers in the same order as the markers dataset")
   if(any(names(markers)!=c("marker", "chr", "pos"))) stop("dataset needs to include marker, chr and pos columns in that order")
-  if(length(unique(markers$chr))>1) stop("there should only be markers from one chromosome in the markers dataset") 
+  if(length(unique(markers$chr))>1) stop("there should only be markers from one chromosome in the markers dataset")   
   if(!(markers$chr[1] %in% 1:22)) stop("the plotting tool is only for autosomal chromosomes") 
-  if(any(is.na(markers))) stop("there are missing in your marker dataset") 
+  if(any(is.na(markers))) stop("there are missing markers in your marker dataset") 
   # if(any(is.na(z))) stop("there are missing values in the Z-score matrix")
   if(class(markers$pos)!="integer") stop("the pos variable has to be an integer")
   if(is.null(corr) & !is.null(corr.top) & is.null(top.marker)) stop("top.marker must be defined if corr.top is provided")
   if(is.null(corr) & !is.null(corr.top)){if(length(corr.top)!=nrow(markers)) stop("corr.top has to have the same length as the number of rows in the markers dataset")}
   if(!is.null(top.marker) & length(which(top.marker==markers$marker))==0) stop("top.marker is not contained in the markers dataset")
   if(!is.null(top.marker) & length(which(top.marker==markers$marker))>1) stop("top.marker maps to multiple markers in the markers dataset")
-
+  
   # Coerce data
   markers$marker <- as.character(markers$marker)
   chr <- as.numeric(markers$chr[1])
   r2_legend <- legend
-  if(is.null(x.min)){x.min <- min(as.integer(data$pos))}
-  if(is.null(x.max)){x.max <- max(as.integer(data$pos))}
+  if(is.null(x.min)){x.min <- min(as.integer(markers$pos))}
+  if(is.null(x.max)){x.max <- max(as.integer(markers$pos))}
   if((x.max - x.min)>10000000) stop("the plotting tool can plot a maximum of 10MB")
   
-  print("DONE")
-
   # mlog10p
   if(type=="log10p"){
     mlog10p <- suppressWarnings(apply(z, 2, function(x){-(log(2) + pnorm(-abs(x), log.p=T))/log(10)}))
@@ -705,9 +703,7 @@ stack_assoc_plot <- function(markers, z, corr=NULL, corr.top=NULL, traits, ylab=
 
   # Top marker
   if(length(top.marker)!=0){if(is.na(top.marker)){top.marker <- NULL}}
-  
-  print("DONE")
-  
+    
   # Association plot
   for(i in length(traits):1){
     if(type=="log10p"){
