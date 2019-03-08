@@ -218,7 +218,7 @@ plot_assoc <- function(data, corr=NULL, corr.top=NULL, x.min, x.max, top.marker=
   if(!is.null(corr.top)){corr.top <- corr.top[!miss]}  
   data <- data[!miss,]
   if(length(top.marker)!=0){
-    top_marker <- which(top.marker==data$marker)
+    top_marker <- which(data$marker==top.marker)
     if(length(top_marker)>1){top_marker <- sample(top_marker, 1); if(is.null(corr) & !is.null(corr.top)) warning("top.marker maps to multiple markers")}
     if(length(top_marker)==0){top_marker <- max.col(t(data$stats))} 
     lead_marker <- data[top_marker,]  
@@ -476,7 +476,7 @@ plot_assoc_stack <- function(data, corr=NULL, corr.top=NULL, x.min, x.max, top.m
   if(!is.null(corr.top)){corr.top <- corr.top[!miss]}  
   data <- data[!miss,]
   if(length(top.marker)!=0){
-    top_marker <- which(top.marker==data$marker)
+    top_marker <- which(data$marker==top.marker)
     if(length(top_marker)>1){top_marker <- sample(top_marker, 1); if(is.null(corr) & !is.null(corr.top)) warning("top.marker maps to multiple markers")}
     if(length(top_marker)==0){top_marker <- max.col(t(data$stats))} 
     lead_marker <- data[top_marker,]  
