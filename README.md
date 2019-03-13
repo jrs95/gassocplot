@@ -21,7 +21,9 @@ corr <- gassocplot::test_corr
 plot <- assoc_plot(markers, corr)   
 assoc_plot_save(plot, "assoc_plot_test.png")  
 
+<img src="image" width="40%">
 ![](https://raw.githubusercontent.com/jrs95/utilities/master/assoc_plot_test.png?raw=true)
+</img>
 
 \#\#\# stack_assoc_plot  
 markers <- gassocplot::test_stack_assoc_plot_markers  
