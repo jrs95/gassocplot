@@ -21,6 +21,8 @@ corr <- gassocplot::test_corr
 plot <- assoc_plot(markers, corr)   
 assoc_plot_save(plot, "assoc_plot_test.png")  
 
+![](https://raw.githubusercontent.com/jrs95/utilities/master/assoc_plot_test.png?raw=true)
+
 \#\#\# stack_assoc_plot  
 markers <- gassocplot::test_stack_assoc_plot_markers  
 head(markers)  
@@ -28,7 +30,9 @@ z <- gassocplot::test_stack_assoc_plot_associations
 head(z)  
 corr <- gassocplot::test_corr   
 plot <- stack_assoc_plot(markers, z, corr, traits=c("Trait 1", "Trait 2"))  
-stack_assoc_plot_save(plot, "stack_assoc_plot_test.png", 2)  
+stack_assoc_plot_save(plot, "stack_assoc_plot_test.png", 2)
+
+![](https://raw.githubusercontent.com/jrs95/utilities/master/stack_assoc_plot_test.png?raw=true)
 
 ## Citation
 Please cite this R package using the link: https://github.com/jrs95/gassocplot
