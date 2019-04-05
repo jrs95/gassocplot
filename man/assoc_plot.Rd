@@ -9,7 +9,7 @@ assoc_plot(data, corr=NULL, corr.top=NULL, ylab = NULL, title = NULL,
   top.marker=NULL, legend=TRUE)
 }
 \arguments{
-\item{data}{data.frame with markername (marker), chromosome (chr), position (pos) and either z-statistics (z) or probabilities (prob) columns}
+\item{data}{data.frame with markername (marker), chromosome (chr), build 37 position (pos) and either z-statistics (z) or probabilities (prob) columns}
 
 \item{corr}{(Pearson) correlation matrix between markers (i.e. r not r2)}
 
