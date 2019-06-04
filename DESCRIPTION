@@ -1,7 +1,7 @@
 Package: gassocplot
 Title: Regional association plots
 Version: 1.0
-Date: 15-01-2018
+Date: 15-01-2019
 Author: James Staley
 Maintainer: James Staley <james.staley@bristol.ac.uk>
 Description: This package is used plot regional association plots. 
