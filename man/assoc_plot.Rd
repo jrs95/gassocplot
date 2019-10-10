@@ -35,5 +35,5 @@ assoc_plot(data, corr=NULL, corr.top=NULL, ylab = NULL, title = NULL,
 assoc_plot plots a scatter graph of associations (e.g. log10 p-values)
 }
 \author{
-James R Staley <james.staley@bristol.ac.uk>
+James R Staley <jrstaley95@gmail.com>
 }
