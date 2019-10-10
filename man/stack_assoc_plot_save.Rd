@@ -23,5 +23,5 @@ stack_assoc_plot_save(x, file, n_traits, width = NULL, height = NULL, dpi=500)
 stack_assoc_plot_save saves a png of the assoc_plot with the correct dimensions
 }
 \author{
-James R Staley <james.staley@bristol.ac.uk>
+James R Staley <jrstaley95@gmail.com>
 }
