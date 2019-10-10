@@ -664,7 +664,7 @@ stack_assoc_plot <- function(markers, z, corr=NULL, corr.top=NULL, traits, ylab=
   
   # Coerce data
   markers$marker <- as.character(markers$marker)
-  chr <- as.numeric(markers$chr[1])
+  chr <- as.integer(markers$chr[1])
   r2_legend <- legend
   if(is.null(x.min)){x.min <- min(as.integer(markers$pos))}
   if(is.null(x.max)){x.max <- max(as.integer(markers$pos))}
