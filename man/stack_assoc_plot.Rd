@@ -34,5 +34,5 @@ stack_assoc_plot(markers, z, corr=NULL, corr.top=NULL, traits, ylab=NULL,
 stack_assoc_plot plots stacked regional association plots
 }
 \author{
-James R Staley <james.staley@bristol.ac.uk>
+James R Staley <jrstaley95@gmail.com>
 }
