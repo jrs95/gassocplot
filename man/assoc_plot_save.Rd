@@ -21,5 +21,5 @@ assoc_plot_save(x, file, width = 9, height = 7, dpi=500)
 assoc_plot_save saves a png of the assoc_plot with the correct dimensions
 }
 \author{
-James R Staley <james.staley@bristol.ac.uk>
+James R Staley <jrstaley95@gmail.com>
 }
