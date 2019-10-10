@@ -237,10 +237,10 @@ plot_assoc <- function(data, corr=NULL, corr.top=NULL, x.min, x.max, top.marker=
   }
   if(!is.null(corr)){r2 <- corr[,top_marker]^2}else{r2 <- corr.top^2}
   data$r2 <- "miss"
-  data$r2[r2<0.2 & !is.na(r2)] <- "0.0-0.2"
-  data$r2[r2>=0.2 & r2<=0.4 & !is.na(r2)] <- "0.2-0.4"
-  data$r2[r2>=0.4 & r2<=0.6 & !is.na(r2)] <- "0.4-0.6"
-  data$r2[r2>=0.6 & r2<=0.8 & !is.na(r2)] <- "0.6-0.8"
+  data$r2[r2>=0 & r2<0.2 & !is.na(r2)] <- "0.0-0.2"
+  data$r2[r2>=0.2 & r2<0.4 & !is.na(r2)] <- "0.2-0.4"
+  data$r2[r2>=0.4 & r2<0.6 & !is.na(r2)] <- "0.4-0.6"
+  data$r2[r2>=0.6 & r2<0.8 & !is.na(r2)] <- "0.6-0.8"
   data$r2[r2>=0.8 & r2<=1 & !is.na(r2)] <- "0.8-1.0" 
   data$r2 <- factor(data$r2, levels=c("miss", "0.0-0.2", "0.2-0.4", "0.4-0.6", "0.6-0.8", "0.8-1.0"))
   ylim <- max((max(data$stats)+0.1*max(data$stats)),1)
@@ -495,11 +495,11 @@ plot_assoc_stack <- function(data, corr=NULL, corr.top=NULL, x.min, x.max, top.m
   }
   if(!is.null(corr)){r2 <- corr[,top_marker]^2}else{r2 <- corr.top^2}
   data$r2 <- "miss"
-  data$r2[r2<0.2 & !is.na(r2)] <- "0.0-0.2"
-  data$r2[r2>=0.2 & r2<=0.4 & !is.na(r2)] <- "0.2-0.4"
-  data$r2[r2>=0.4 & r2<=0.6 & !is.na(r2)] <- "0.4-0.6"
-  data$r2[r2>=0.6 & r2<=0.8 & !is.na(r2)] <- "0.6-0.8"
-  data$r2[r2>=0.8 & r2<=1 & !is.na(r2)] <- "0.8-1.0" 
+  data$r2[r2>=0 & r2<0.2 & !is.na(r2)] <- "0.0-0.2"
+  data$r2[r2>=0.2 & r2<0.4 & !is.na(r2)] <- "0.2-0.4"
+  data$r2[r2>=0.4 & r2<0.6 & !is.na(r2)] <- "0.4-0.6"
+  data$r2[r2>=0.6 & r2<0.8 & !is.na(r2)] <- "0.6-0.8"
+  data$r2[r2>=0.8 & r2<=1 & !is.na(r2)] <- "0.8-1.0"
   data$r2 <- factor(data$r2, levels=c("miss", "0.0-0.2", "0.2-0.4", "0.4-0.6", "0.6-0.8", "0.8-1.0"))
   ylim <- max((max(data$stats)+0.2*max(data$stats)),1)
   marker.plot <- ggplot(aes(x=pos,y=stats), data=data) + geom_point(aes(fill=r2), pch=21, size=3) + scale_fill_manual(values=c("#DCDCDC", "#66FFFF", "#66FF66", "#FFCC00", "#FF9933", "#CC3300", "#FF0000"), drop=FALSE) + geom_point(data=lead_marker, aes(x=pos,y=stats), pch=23, colour="black", fill="purple", size=4) + theme_bw() +  ylab(ylab) + xlab(NULL) + scale_y_continuous(limits=c(0,ylim)) + theme(axis.title.y=element_text(vjust=2.25, size=14), axis.text=element_text(size=12)) + theme(panel.grid.major=element_blank(), panel.grid.minor=element_blank()) + scale_x_continuous(limits=c(x.min, x.max), breaks=NULL) + theme(axis.title=element_text(size=10)) + theme(legend.text=element_text(size=10), legend.title=element_text(size=12), legend.background = element_rect(colour = "black")) + theme(panel.background=element_rect(fill=NA)) + theme(legend.position="bottom") + guides(fill = guide_legend(nrow = 1))
