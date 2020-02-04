@@ -397,7 +397,7 @@ assoc_plot <- function(data, corr=NULL, corr.top=NULL, ylab=NULL, title=NULL, su
   if((x.max - x.min)>10000000) stop("the plotting tool can plot a maximum of 10MB")
 
   # Genes
-  gene.region <- genes[genes$chr==chr & !(genes$end<x.min) & !(genes$start>x.max),]
+  gene.region <- gassocplot::genes[gassocplot::genes$chr==chr & !(gassocplot::genes$end<x.min) & !(gassocplot::genes$start>x.max),]
   gene.region$start[gene.region$start<x.min] <- x.min
   gene.region$end[gene.region$end>x.max] <- x.max
   gene.region <- gene.region[with(gene.region, order(start)), ]
@@ -678,7 +678,7 @@ stack_assoc_plot <- function(markers, z, corr=NULL, corr.top=NULL, traits, ylab=
   if(type=="log10p"){ylab <- expression("-log"["10"]*paste("(",italic("p"),")"))}else{if(is.null(ylab)){ylab <- "Probability"}}
  
   # Genes
-  gene.region <- genes[genes$chr==chr & !(genes$end<x.min) & !(genes$start>x.max),]
+  gene.region <- gassocplot::genes[gassocplot::genes$chr==chr & !(gassocplot::genes$end<x.min) & !(gassocplot::genes$start>x.max),]
   gene.region$start[gene.region$start<x.min] <- x.min
   gene.region$end[gene.region$end>x.max] <- x.max
   gene.region <- gene.region[with(gene.region, order(start)), ]
