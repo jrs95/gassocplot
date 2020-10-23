@@ -2,9 +2,9 @@
 Regional association plots for genetic and epigenetic data.
 
 ## Functions
-* assoc_plot - plots a regional association plot or fine-mapping probability plot for a single trait within a genomic region based on GRCh37 (hg19) cooridnates.  
+* assoc_plot - plots a regional association plot or fine-mapping probability plot for a single trait within a genomic region based on GRCh37 (hg19) coordinates.  
 * assoc_plot_save - saves a PNG of the assoc_plot.  
-* stack_assoc_plot - plots a stacked regional association plot for multiple traits within a genomic region based on GRCh37 (hg19) cooridnates.  
+* stack_assoc_plot - plots a stacked regional association plot for multiple traits within a genomic region based on GRCh37 (hg19) coordinates.  
 * stack_assoc_plot_save - saves a PNG of the stack_assoc_plot.  
 
 ## Installation
