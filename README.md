@@ -1,5 +1,5 @@
 # gassocplot
-Regional association plots for genetic and epigenetic data.
+Regional association plots for genetic and epigenetic data. gassocplot2 is now [available](https://github.com/jrs95/gassocplot2), which enables use of build 38 (hg38) coordinates in addition to GRCh37 (hg19) coordinates as well as incorporating additional marker labelling. 
 
 ## Functions
 * assoc_plot - plots a regional association plot or fine-mapping probability plot for a single trait within a genomic region based on GRCh37 (hg19) coordinates.  
