@@ -4,30 +4,41 @@
 \alias{stack_assoc_plot}
 \title{stack_assoc_plot}
 \usage{
-stack_assoc_plot(markers, z, corr=NULL, corr.top=NULL, traits, ylab=NULL,
-  type="log10p", x.min = NULL, x.max = NULL, top.marker = NULL, legend=TRUE)
+stack_assoc_plot(
+  markers,
+  z,
+  corr = NULL,
+  corr.top = NULL,
+  traits,
+  ylab = NULL,
+  type = "log10p",
+  x.min = NULL,
+  x.max = NULL,
+  top.marker = NULL,
+  legend = TRUE
+)
 }
 \arguments{
 \item{markers}{data.frame of markers with markername (marker), chromosome (chr) and position (pos)}
 
 \item{z}{matrix of Z-scores or probabilities with one column for each trait}
 
-\item{corr}{(Pearson) correlation matrix between markers (i.e. r not r2) with the markers ordered in the same way as in the markers data frame}
+\item{corr}{matrix of correlation statistics between markers}
 
-\item{corr.top}{(Pearson) correlation statistics between the top marker and the rest of the markers (i.e. r not r2) with the markers ordered in the same way as in the markers data frame}
-  
+\item{corr.top}{correlation statistics between the top marker and the rest of the markers}
+
 \item{traits}{trait names}
 
 \item{ylab}{the y-axis label}
 
 \item{type}{the type of the plot either log10p or probabilities}
-  
+
 \item{x.min}{start of region}
 
 \item{x.max}{end of region}
 
-\item{top.marker}{the marker to be annotated in the plot}
-  
+\item{top.marker}{the top associated marker, i.e. the marker with the largest -log10p or probability}
+
 \item{legend}{add r2 legend}
 }
 \description{

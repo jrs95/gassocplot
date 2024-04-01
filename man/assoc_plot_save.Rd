@@ -4,16 +4,16 @@
 \alias{assoc_plot_save}
 \title{assoc_plot_save}
 \usage{
-assoc_plot_save(x, file, width = 9, height = 7, dpi=500)
+assoc_plot_save(x, file, width = 9, height = 7, dpi = 500)
 }
 \arguments{
 \item{x}{the plot}
 
 \item{file}{the filepath}
 
-\item{width}{the width of the plot in inches}
+\item{width}{the width of the plot}
 
-\item{height}{the height of the plot in inches}
+\item{height}{the height of the plot}
 
 \item{dpi}{the resolution of the plot}
 }

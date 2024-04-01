@@ -4,7 +4,14 @@
 \alias{stack_assoc_plot_save}
 \title{stack_assoc_plot_save}
 \usage{
-stack_assoc_plot_save(x, file, n_traits, width = NULL, height = NULL, dpi=500)
+stack_assoc_plot_save(
+  x,
+  file,
+  n_traits,
+  width = NULL,
+  height = NULL,
+  dpi = 500
+)
 }
 \arguments{
 \item{x}{the plot}
@@ -13,9 +20,9 @@ stack_assoc_plot_save(x, file, n_traits, width = NULL, height = NULL, dpi=500)
 
 \item{n_traits}{the filepath}
 
-\item{width}{the width of the plot in inches}
+\item{width}{the width of the plot}
 
-\item{height}{the height of the plot in inches}
+\item{height}{the height of the plot}
 
 \item{dpi}{the resolution of the plot}
 }
