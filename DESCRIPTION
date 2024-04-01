@@ -18,8 +18,7 @@ Imports:
     ggplot2,
     grid,
     gridExtra,
-    gtable,
-    R.devices
+    gtable
 Suggests:
     knitr
 License: GPL-3

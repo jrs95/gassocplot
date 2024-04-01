@@ -578,7 +578,7 @@ assoc_plot <- function(data, corr = NULL, corr.top = NULL, ylab = NULL, title = 
 #' @author James R Staley <jrstaley95@gmail.com>
 #' @export
 assoc_plot_save <- function(x, file, width = 9, height = 7, dpi = 500) {
-  suppressGraphics(ggsave(file, plot = grid.draw(x), width = width, height = height, units = "in", limitsize = F, dpi = dpi))
+  ggsave(file, plot = x, width = width, height = height, units = "in", limitsize = F, dpi = dpi)
 }
 
 ##########################################################
@@ -977,5 +977,5 @@ stack_assoc_plot_save <- function(x, file, n_traits, width = NULL, height = NULL
   if (is.null(height)) {
     height <- 3 + 3 * n_traits
   }
-  suppressGraphics(ggsave(file, plot = grid.draw(x), width = width, height = height, units = "in", limitsize = F, dpi = dpi))
+  ggsave(file, plot = x, width = width, height = height, units = "in", limitsize = F, dpi = dpi)
 }

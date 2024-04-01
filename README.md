@@ -21,7 +21,7 @@ library(gassocplot)
 # Association plot
 markers <- gassocplot::test_assoc_plot
 head(markers)
-corr <- gassocplot::test_corr # this is correlation not correlation squared and has to be ordered in the same way as the markers data frame
+corr <- gassocplot::test_corr # correlation matrix (not correlation squared) ordered in the same way as the markers
 plot <- assoc_plot(markers, corr)
 assoc_plot_save(plot, "assoc_plot_test.png")
 
@@ -30,7 +30,7 @@ markers <- gassocplot::test_stack_assoc_plot_markers
 head(markers)
 z <- gassocplot::test_stack_assoc_plot_associations
 head(z)
-corr <- gassocplot::test_corr # this is correlation not correlation squared and has to be ordered in the same way as the markers data frame
+corr <- gassocplot::test_corr # correlation matrix (not correlation squared) ordered in the same way as the markers
 plot <- stack_assoc_plot(markers, z, corr, traits=c("Trait 1", "Trait 2"))
 stack_assoc_plot_save(plot, "stack_assoc_plot_test.png", 2)
 ```
