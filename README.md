@@ -1,3 +1,7 @@
+# GENI plots <img src='man/figures/logo.png' align="right" height="139"/>
+`gassocplot` is no longer maintained, please use `fig_region` and `fig_region_stack` in `geni.plots` instead. `geni.plots` is available [here](https://github.com/jrs95/geni.plots/).
+
+<!--
 # gassocplot <img src='man/figures/logo.png' align="right" height="139"/>
 Regional association plots for genetic and epigenetic data. gassocplot2 is now [available](https://github.com/jrs95/gassocplot2), which enables use of build 38 (hg38) coordinates in addition to GRCh37 (hg19) coordinates as well as incorporating additional marker labelling. 
 
@@ -48,3 +52,4 @@ Please cite this R package using the link: https://github.com/jrs95/gassocplot
 
 ### Stacked regional association plot
 ![](./man/figures/stack_assoc_plot_test.png)
+-->
